@@ -1,8 +1,8 @@
 /* Ceilingflow · kleurthema, scroll-animaties, winkelmandje (Shopify cart-permalink) en offerteformulier */
 const CEILINGFLOW = {
   SHOP: 'https://5wkm0h-xs.myshopify.com',
-  VARIANT_WIT: 'VARIANT_WIT',     // vul hier het Shopify variant-id van Wit in (alleen cijfers)
-  VARIANT_ZWART: 'VARIANT_ZWART', // vul hier het Shopify variant-id van Zwart in (alleen cijfers)
+  VARIANT_WIT: '66312769339741',     // vul hier het Shopify variant-id van Wit in (alleen cijfers)
+  VARIANT_ZWART: '66312769372509', // vul hier het Shopify variant-id van Zwart in (alleen cijfers)
   PRICE_EX: 299,
   PRICE_INC: 361.79,
   FORM_EMAIL: 'nick@gnc-systems.com',
