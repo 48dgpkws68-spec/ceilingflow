@@ -114,7 +114,7 @@ const CEILINGFLOW = {
       <div class="cfc-f">
         <div class="cfc-row"><span>Subtotaal excl. btw</span><span id="cfcEx">€0</span></div>
         <div class="cfc-row t"><span>Incl. btw</span><span id="cfcInc">€0</span></div>
-        <div class="cfc-s">Verzending per unit (NL €9,50 · BE/DE €18,50 · overig EU €24,95) wordt in de checkout berekend.</div>
+        <div class="cfc-s">Verzending per bestelling (NL €9,50 · BE €18,50 · DE €24,50 · overig EU €34,50) wordt in de checkout berekend.</div>
         <a class="cfc-go" id="cfcGo" href="#">Veilig afrekenen</a>
       </div>
     </aside>`);
