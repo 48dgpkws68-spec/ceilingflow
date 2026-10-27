@@ -112,7 +112,7 @@ def faq_block(items):
 def footer():
     return f'''<footer><div class="wrap">
   <div><a class="logo" href="/" style="color:var(--ink)">{LOGO}<span>Ceiling<i>flow</i></span></a><p style="margin-top:14px;max-width:26em">Ventilatie voor 60×60 systeemplafonds. Voor kantoren, scholen, kinderopvang en zorginstellingen.</p></div>
-  <div><h4>Product</h4><ul><li><a href="/ventilator/">Ceilingflow Ventilatie Unit</a></li><li><a href="/ventilator/#specs">Specificaties</a></li><li><a href="/#installatie">Installatie</a></li></ul></div>
+  <div><h4>Product</h4><ul><li><a href="/ventilator/">Ceilingflow Ventilatie Unit</a></li><li><a href="/ventilator/#specs">Specificaties</a></li><li><a href="/#installatie">Installatie</a></li><li><a href="/scholen/">Voor scholen en kinderopvang</a></li></ul></div>
   <div><h4>Zakelijk</h4><ul><li><a href="/#offerte">Offerte aanvragen</a></li><li>Btw-factuur</li><li>Bulkbestellingen</li></ul></div>
   <div><h4>Contact</h4><ul><li><a href="mailto:{MAIL}">{MAIL}</a></li><li><a href="tel:+31634333809">{PHONE}</a></li></ul></div>
   <div class="big" aria-hidden="true">Ceilingflow</div>
@@ -290,6 +290,7 @@ def index():
   <span class="eyebrow rv">Toepassingen</span>
   <h2 class="h2 rv d1" style="margin-top:20px">Werkt overal waar<br>een <em>systeemplafond</em> hangt.</h2>
   <div class="apps">{apps_html}</div>
+  <p class="rv" style="margin-top:28px"><a class="btn ghost" href="/scholen/">Ceilingflow voor scholen en kinderopvang</a></p>
 </div></section>
 
 <section class="sec" id="product" style="padding-top:0"><div class="wrap">
@@ -500,6 +501,109 @@ new IntersectionObserver(([e]) => mbar.classList.toggle('show', !e.isIntersectin
     return h + body
 
 
+SCHOOL_CSS = """<style>
+.sh{padding:clamp(40px,6vw,80px) 0 0}
+.sh .crumb{font-size:13px;color:var(--soft);margin-bottom:22px}
+.sh .row{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}
+.sh .hero-img{width:100%;aspect-ratio:16/8;object-fit:cover;border-radius:clamp(24px,4vw,44px);margin-top:clamp(36px,5vw,60px)}
+@media(max-width:700px){.sh .hero-img{aspect-ratio:4/3.4}}
+.sec2{padding:clamp(80px,11vw,140px) 0}
+.vg{display:grid;gap:12px;margin-top:50px}
+@media(min-width:700px){.vg{grid-template-columns:1fr 1fr}}
+@media(min-width:1100px){.vg{grid-template-columns:repeat(3,1fr)}}
+.vg article{padding:28px;border-radius:var(--r);background:var(--card);box-shadow:inset 0 0 0 1px var(--line)}
+.vg h3{font-size:24px;letter-spacing:-.03em;margin-bottom:10px}
+.vg p,.soft{color:var(--soft);font-size:15px}
+.eerlijk{display:grid;gap:30px;padding:clamp(28px,5vw,60px);border-radius:clamp(28px,4vw,52px);background:var(--inv);color:var(--invink)}
+.eerlijk p{font-size:17px;opacity:.85}
+.eerlijk p+p{margin-top:14px}
+@media(min-width:1000px){.eerlijk{grid-template-columns:1fr 1.2fr;align-items:center}}
+.kost{display:grid;gap:40px}
+@media(min-width:1000px){.kost{grid-template-columns:1fr 1fr;align-items:center}}
+.kost .soft{margin-top:14px}
+.kost table{width:100%;border-collapse:collapse;font-size:17px}
+.kost th{text-align:left;font-size:13px;color:var(--soft);font-weight:500;padding:0 0 12px}
+.kost td{padding:16px 0;border-top:1px solid var(--line)}
+.kost td+td,.kost th+th{text-align:right}
+.st{display:grid;gap:12px;margin-top:24px}
+@media(min-width:800px){.st{grid-template-columns:repeat(3,1fr)}}
+.st div{padding:24px;border-radius:22px;box-shadow:inset 0 0 0 1px var(--line)}
+.st b{font-size:46px;letter-spacing:-.05em;color:var(--acc);line-height:1}
+.st p{margin-top:8px;font-weight:600;font-size:18px}
+.st span{display:block;margin-top:6px;color:var(--soft);font-size:15px}
+</style>"""
+
+SCHOOL_FAQ = [
+    ("Stoort Ceilingflow tijdens de les?", "Nee. Ceilingflow werkt onder 35 dB, vergelijkbaar met een zachte fluisterstem. Dat is stil genoeg voor lessen, toetsen en de slaapruimte van de kinderopvang."),
+    ("Is een plafondventilator veilig in een klaslokaal?", "Ceilingflow zit in het systeemplafond, buiten bereik van leerlingen. Er staat niets op de vloer en er lopen geen snoeren door het lokaal, dus geen struikelgevaar. De unit is IP44, CE- en RoHS-gecertificeerd."),
+    ("Ververst Ceilingflow de lucht of verlaagt hij CO2?", "Nee. Ceilingflow brengt de lucht in het lokaal in beweging, hij voert geen buitenlucht aan en verlaagt CO2 niet. Hij vervangt dus geen mechanische ventilatie of luchten via ramen, maar maakt een warm of benauwd lokaal wel aangenamer."),
+    ("Moet de installateur of conciërge veel doen?", "Nee. Plafondtegel eruit, Ceilingflow in het 60×60 rooster, stekker in het stopcontact. Gemiddeld minder dan 5 minuten per unit, zonder bouwkundige aanpassingen of speciaal gereedschap. Er moet wel een stopcontact binnen bereik boven het plafond zitten."),
+    ("Heeft Ceilingflow in de winter zin?", "Ja. Warme lucht van de verwarming blijft vaak onder het plafond hangen. Door de lucht rond te laten gaan, komt die warmte beter bij de tafels terecht. In de zomer koelt de luchtstroom zelf."),
+    ("Kunnen we op factuur bestellen voor meerdere lokalen?", "Ja. Je ontvangt altijd een btw-factuur. Voor meerdere lokalen of locaties vraag je een zakelijke offerte aan, je krijgt binnen één werkdag een voorstel op maat."),
+]
+
+
+def scholen():
+    voordelen = [("Fluisterstil", "Onder 35 dB. Geen geruis tijdens instructie, toetsen of stilwerken."),
+                 ("Niets op de vloer", "Geen staande ventilator, geen snoer over de grond, geen struikelgevaar tussen de tafels."),
+                 ("Buiten bereik", "De unit zit in het plafond. Leerlingen en peuters kunnen er niet aan zitten."),
+                 ("Klaar in 5 minuten", "Plafondtegel eruit, unit erin, stekker erin. Geen bouwkundige aanpassingen."),
+                 ("Zomer en winter", "Verkoeling door luchtstroom op warme dagen, warme lucht van het plafond naar beneden in het stookseizoen."),
+                 ("Afstandsbediening", "Inbegrepen. De leerkracht regelt snelheid, richting en timer vanaf het bureau.")]
+    v_html = ''.join(f'<article class="rv d{i % 3}"><h3>{a}</h3><p>{b}</p></article>' for i, (a, b) in enumerate(voordelen))
+    rows = ''.join(f'<tr><td>{n} {"unit" if n == 1 else "units"}</td><td>€{299 * n:,}'.replace(',', '.') + f'</td><td>€{361.79 * n:,.2f}'.replace(',', 'X').replace('.', ',').replace('X', '.') + '</td></tr>' for n in (1, 5, 10, 20))
+    faq_ld = json.dumps({"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in SCHOOL_FAQ]}, ensure_ascii=False)
+    extra = SCHOOL_CSS + f'<script type="application/ld+json">{faq_ld}</script>'
+    extra += '<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://ceilingflow.nl/"},{"@type":"ListItem","position":2,"name":"Scholen en kinderopvang","item":"https://ceilingflow.nl/scholen/"}]}</script>'
+    h = head('Plafondventilator voor klaslokalen · Ceilingflow voor scholen', 'Stille plafondventilator voor het 60x60 systeemplafond in klaslokalen en kinderopvang. Onder 35 dB, niets op de vloer, installatie in 5 minuten. €299 excl. btw, offerte voor meerdere lokalen.', '/scholen/', extra)
+    body = nav(False) + f'''
+<main>
+<section class="sh"><div class="wrap">
+  <div class="crumb rv"><a href="/">Home</a> / Scholen en kinderopvang</div>
+  <span class="eyebrow rv">Voor scholen en kinderopvang</span>
+  <h1 class="h2 rv d1" style="margin:20px 0 24px">Een fris lokaal.<br>Zonder ventilator <em>op de vloer</em>.</h1>
+  <p class="lead rv d2">Ceilingflow is een plafondventilator die in het standaard 60×60 systeemplafond past. Stil genoeg voor de les, buiten bereik van kinderen en binnen 5 minuten geplaatst.</p>
+  <div class="row rv d3"><a class="btn acc" href="#offerte">Offerte voor meerdere lokalen</a><a class="btn ghost" href="/ventilator/">Bekijk de ventilator</a></div>
+  <img class="hero-img rv" src="/img/school.webp" alt="Ceilingflow plafondventilator in het systeemplafond van een klaslokaal" fetchpriority="high">
+</div></section>
+
+<section class="sec2"><div class="wrap">
+  <span class="eyebrow rv">Waarom in de klas</span>
+  <h2 class="h2 rv d1" style="margin-top:20px">Gemaakt voor<br>een <em>leeromgeving</em>.</h2>
+  <div class="vg">{v_html}</div>
+</div></section>
+
+<section class="sec2" style="padding-top:0"><div class="wrap eerlijk rv">
+  <div><span class="eyebrow">Eerlijk is eerlijk</span><h2 class="h2" style="margin-top:20px;font-size:clamp(34px,4.4vw,60px)">Wat Ceilingflow <em>niet</em> doet.</h2></div>
+  <div><p>Ceilingflow laat de lucht in het lokaal circuleren. Hij voert geen buitenlucht aan en verlaagt CO2 niet. Hij vervangt dus geen mechanische ventilatie of het luchten via ramen.</p><p>Wat hij wel doet: een warm of benauwd lokaal aangenamer maken, zonder losse ventilatoren tussen de tafels en zonder verbouwing. In het stookseizoen brengt hij de warme lucht onder het plafond terug naar de leerlingen.</p></div>
+</div></section>
+
+<section class="sec2" style="padding-top:0"><div class="wrap kost">
+  <div class="rv">
+    <span class="eyebrow">Wat kost het</span>
+    <h2 class="h2" style="margin-top:20px;font-size:clamp(34px,4.4vw,60px)">Vaste prijs per unit.</h2>
+    <p class="lead" style="margin-top:18px">€299 excl. btw per unit, afstandsbediening inbegrepen. Verzending per bestelling, ongeacht het aantal: Nederland €9,50, België €18,50. Levering van Wit en Zwart vanaf 1 november.</p>
+    <p class="soft">Voor meerdere locaties of een levering in de vakantie maken we een offerte op maat.</p>
+  </div>
+  <table class="rv d1"><thead><tr><th>Aantal</th><th>Excl. btw</th><th>Incl. btw</th></tr></thead><tbody>{rows}</tbody></table>
+</div></section>
+
+<section class="sec2" style="padding-top:0"><div class="wrap">
+  <span class="eyebrow rv">Zo gaat het</span>
+  <div class="st">
+    <div class="rv"><b>1</b><p>Offerte aanvragen</p><span>Aantal lokalen en locatie, reactie binnen 1 werkdag.</span></div>
+    <div class="rv d1"><b>2</b><p>Levering</p><span>Wit of Zwart, met btw-factuur voor de administratie.</span></div>
+    <div class="rv d2"><b>3</b><p>Plaatsen</p><span>Tegel eruit, unit erin, stekker erin. Gemiddeld 5 minuten per lokaal.</span></div>
+  </div>
+</div></section>
+
+{offerte('Offerte voor uw school')}
+{faq_block(SCHOOL_FAQ)}
+</main>
+''' + footer() + '</body>\n</html>\n'
+    return h + body
+
+
 def simple(title, path, h1, text):
     return head(title, text, path, '<meta name="robots" content="noindex">') + nav(False) + f'''
 <main class="wrap" style="padding:clamp(90px,14vw,180px) 0;min-height:60vh">
@@ -515,6 +619,8 @@ def main():
     (ROOT / 'index.html').write_text(index())
     (ROOT / 'ventilator').mkdir(exist_ok=True)
     (ROOT / 'ventilator/index.html').write_text(pdp())
+    (ROOT / 'scholen').mkdir(exist_ok=True)
+    (ROOT / 'scholen/index.html').write_text(scholen())
     (ROOT / 'bedankt').mkdir(exist_ok=True)
     (ROOT / 'bedankt/index.html').write_text(simple('Bedankt · Ceilingflow', '/bedankt/', 'Bedankt voor je <em>aanvraag</em>.', 'We hebben je offerteaanvraag ontvangen en reageren binnen één werkdag.'))
     (ROOT / '404.html').write_text(simple('Pagina niet gevonden · Ceilingflow', '/404.html', 'Deze pagina <em>bestaat niet</em>.', 'De pagina die je zoekt is verplaatst of bestaat niet meer.'))
@@ -522,6 +628,7 @@ def main():
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>{URL}/</loc><changefreq>weekly</changefreq><priority>1.0</priority></url>
   <url><loc>{URL}/ventilator/</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>{URL}/scholen/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
 </urlset>
 ''')
     (ROOT / 'robots.txt').write_text(f'User-agent: *\nAllow: /\nDisallow: /bedankt/\n\nSitemap: {URL}/sitemap.xml\n')
