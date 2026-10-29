@@ -51,6 +51,7 @@ def head(title, desc, path, extra=''):
 {FONTS}
 <link rel="stylesheet" href="/assets/site.css">
 <script>try{{var k=new URLSearchParams(location.search).get('kleur')||localStorage.getItem('cf_kleur');if(k==='zwart'||k==='wit')document.documentElement.dataset.kleur=k}}catch(e){{}}</script>
+<script defer src="https://stats.1v1battles.com/nv.js" data-website-id="1ebd27a4-63bb-4b8e-ae21-0f3f4cb14564"></script>
 {extra}
 </head>
 <body>
