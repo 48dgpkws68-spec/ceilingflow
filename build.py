@@ -14,9 +14,9 @@ FAQ = [
     ("Past Ceilingflow in ieder systeemplafond?", "Ceilingflow is ontworpen voor het standaard 60×60 cm systeemplafond. Dat is het meest gebruikte formaat in kantoren, scholen, zorginstellingen en andere professionele omgevingen. Heb je een afwijkend formaat? Neem dan contact op voor advies."),
     ("Is Ceilingflow een lamp of verlichtingsarmatuur?", "Nee. Ceilingflow is geen lamp. Het is een ventilatie-oplossing voor het 60×60 systeemplafond die zorgt voor luchtcirculatie, niet voor verlichting. Je plaatst Ceilingflow naast je bestaande verlichting."),
     ("Is Ceilingflow geschikt voor scholen en klaslokalen?", "Ja. De stille werking stoort niet tijdens lessen of toetsen. De geïntegreerde montage is veilig voor kinderen en de strakke uitstraling past in iedere schoolomgeving."),
-    ("Kan ik meerdere units bestellen?", "Ja, je bestelt eenvoudig meerdere units. Levering volgt vanaf 1 november. Voor grotere aantallen of maatwerk vraag je een zakelijke offerte aan, dan denken we mee over de beste oplossing voor jouw situatie."),
+    ("Kan ik meerdere units bestellen?", "Ja, je bestelt eenvoudig meerdere units. Na je bestelling mailen we je de leverdatum. Voor grotere aantallen of maatwerk vraag je een zakelijke offerte aan, dan denken we mee over de beste oplossing voor jouw situatie."),
     ("Kan ik een zakelijke factuur ontvangen?", "Ja. Je ontvangt altijd een btw-factuur bij je bestelling. Je kunt je KvK-nummer en btw-nummer opgeven bij het bestellen."),
-    ("Hoe werkt de verzending?", "De prijs is €299 excl. btw (€361,79 incl. btw), exclusief verzendkosten. Verzending kost per bestelling, ongeacht het aantal: Nederland €9,50, België €18,50, Duitsland en de rest van West-Europa €24,50, overige EU-landen €34,50. Buiten Europa leveren we alleen op aanvraag via het offerteformulier. Bestellen kan gewoon: levering van beide kleuren volgt vanaf 1 november."),
+    ("Hoe werkt de verzending?", "De prijs is €299 excl. btw (€361,79 incl. btw), exclusief verzendkosten. Verzending kost per bestelling, ongeacht het aantal: Nederland €9,50, België €18,50, Duitsland en de rest van West-Europa €24,50, overige EU-landen €34,50. Buiten Europa leveren we alleen op aanvraag via het offerteformulier. Bestellen kan direct: na je bestelling mailen we je de leverdatum."),
     ("Is de installatie moeilijk?", "Nee. Ceilingflow plaats je in het bestaande 60×60 plafondrooster, net als een verlichtingsarmatuur. Installatie duurt gemiddeld minder dan 5 minuten per unit. Er zijn geen bouwkundige aanpassingen of speciaal gereedschap nodig."),
     ("Is er een speciale prijs voor meerdere units?", "Bij afname van meerdere units vraag je een zakelijke offerte aan. We maken een offerte op maat. Gebruik het offerteformulier of bel ons direct."),
     ("Kan ik een offerte aanvragen?", "Ja, via het offerteformulier op deze site. Geef het gewenste aantal units, de locatie en je contactgegevens op. Je krijgt binnen één werkdag een offerte op maat."),
@@ -60,7 +60,7 @@ def head(title, desc, path, extra=''):
 
 def nav(home=True):
     p = '' if home else '/'
-    return f'''<div class="topbar">Levertijd beide kleuren: vanaf 1 november · bestellen blijft mogelijk</div>
+    return f'''<div class="topbar">Beide kleuren direct te bestellen · leverdatum volgt per mail</div>
 <nav class="main"><div class="wrap">
   <a class="logo" href="/" aria-label="Ceilingflow home">{LOGO}<span>Ceiling<i>flow</i></span></a>
   <div class="navl"><a href="{p}#oplossing">Oplossing</a><a href="{p}#toepassingen">Toepassingen</a><a href="/ventilator/">Ventilator</a><a href="{p}#offerte">Zakelijk</a><a href="{p}#faq">FAQ</a></div>
@@ -133,7 +133,7 @@ def product_ld():
         "offers": [{"@type": "Offer", "name": f"Ceilingflow {c}", "url": f"{URL}/ventilator/?kleur={c.lower()}", "priceCurrency": "EUR", "price": "361.79",
                     "priceSpecification": [{"@type": "UnitPriceSpecification", "price": "361.79", "priceCurrency": "EUR", "valueAddedTaxIncluded": True},
                                            {"@type": "UnitPriceSpecification", "price": "299.00", "priceCurrency": "EUR", "valueAddedTaxIncluded": False}],
-                    "availability": "https://schema.org/PreOrder", "availabilityStarts": "2026-11-01", "itemCondition": "https://schema.org/NewCondition",
+                    "availability": "https://schema.org/PreOrder", "itemCondition": "https://schema.org/NewCondition",
                     "shippingDetails": [{"@type": "OfferShippingDetails", "shippingRate": {"@type": "MonetaryAmount", "value": v, "currency": "EUR"}, "shippingDestination": [{"@type": "DefinedRegion", "addressCountry": cc} for cc in ccs]} for v, ccs in (("9.50", ["NL"]), ("18.50", ["BE"]), ("24.50", ["DE"]))]}
                    for c in ("Wit", "Zwart")]
     }, ensure_ascii=False)
@@ -301,7 +301,7 @@ def index():
       <span class="eyebrow rv">Ceilingflow Ventilatie Unit</span>
       <h2 class="h2 rv d1" style="margin-top:20px;font-size:clamp(40px,5.6vw,80px)">Kies je kleur.<br>De site kleurt <em>mee</em>.</h2>
       <div class="pr rv d2"><b>€299</b><span>excl. btw · €361,79 incl. btw</span></div>
-      <p class="ship rv d2">Verzending per bestelling: NL €9,50 · BE €18,50 · DE €24,50 · overig EU €34,50 · levering vanaf 1 november</p>
+      <p class="ship rv d2">Verzending per bestelling: NL €9,50 · BE €18,50 · DE €24,50 · overig EU €34,50 · leverdatum per mail na bestelling</p>
       <div class="rv d3" style="display:flex;flex-wrap:wrap;gap:12px">{kleur_toggle()}<a class="btn acc" href="/ventilator/" id="buyLink">Bestel <span data-kleur-naam>Wit</span></a></div>
     </div>
   </div>
@@ -313,7 +313,7 @@ def index():
 <section class="end"><div class="wrap">
   <span class="eyebrow rv">Ceilingflow</span>
   <h2 class="h2 rv d1">Maak iedere werk- of leeromgeving <em>comfortabeler</em>.</h2>
-  <p class="lead rv d2" style="margin:0 auto 30px">Bestel vandaag. Levering van beide kleuren volgt vanaf 1 november.</p>
+  <p class="lead rv d2" style="margin:0 auto 30px">Bestel vandaag. Na je bestelling mailen we je de leverdatum.</p>
   <div class="rv d3" style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap"><a class="btn acc" href="/ventilator/">Bestel Ceilingflow · €299 excl. btw</a><a class="btn ghost" href="#offerte">Zakelijke offerte</a></div>
 </div></section>
 </main>
@@ -430,7 +430,7 @@ def pdp():
     </div>
     <p class="tot" id="tot"></p>
     <button class="alt" type="button" data-offerte-knop>Zakelijke offerte voor meerdere lokalen</button>
-    <div class="eta"><span class="dot"></span><span>Levering van <span data-kleur-naam>Wit</span> vanaf 1 november · bestellen blijft mogelijk</span></div>
+    <div class="eta"><span class="dot"></span><span>Ceilingflow <span data-kleur-naam>Wit</span> direct te bestellen · leverdatum per mail na bestelling</span></div>
     <div class="usps">
       <div><b>NL €9,50</b>verzending per bestelling</div>
       <div><b>BE €18,50 · DE €24,50</b>overig EU €34,50 · per bestelling</div>
@@ -439,7 +439,7 @@ def pdp():
     </div>
     <div class="acc">
       <details id="specs" open><summary>Specificaties</summary><div class="a"><dl class="specs">{specs}</dl></div></details>
-      <details><summary>Verzending en levering</summary><div class="a"><p>Verzending per bestelling, ongeacht het aantal: Nederland €9,50, België €18,50, Duitsland en de rest van West-Europa €24,50, overige EU-landen €34,50. Buiten Europa leveren we alleen op aanvraag via het offerteformulier.</p><p>Levering van beide kleuren volgt vanaf 1 november. Verzendkosten worden in de checkout berekend.</p></div></details>
+      <details><summary>Verzending en levering</summary><div class="a"><p>Verzending per bestelling, ongeacht het aantal: Nederland €9,50, België €18,50, Duitsland en de rest van West-Europa €24,50, overige EU-landen €34,50. Buiten Europa leveren we alleen op aanvraag via het offerteformulier.</p><p>Na je bestelling mailen we je de leverdatum. Verzendkosten worden in de checkout berekend.</p></div></details>
       <details><summary>Retour</summary><div class="a"><p>Vragen over retourneren? Neem contact op via <a href="mailto:{MAIL}" style="text-decoration:underline">{MAIL}</a> of bel {PHONE}. Dan kijken we samen naar je situatie.</p></div></details>
       <details><summary>Montage</summary><div class="a"><p>Ceilingflow plaats je in het bestaande 60×60 plafondrooster, net als een verlichtingsarmatuur. Plafondtegel eruit, Ceilingflow erin, stekker in het stopcontact.</p><p>Gemiddeld minder dan 5 minuten per unit. Geen bouwkundige aanpassingen of speciaal gereedschap nodig. Onderhoud: de luchtinlaat een paar keer per jaar reinigen.</p></div></details>
     </div>
@@ -583,7 +583,7 @@ def scholen():
   <div class="rv">
     <span class="eyebrow">Wat kost het</span>
     <h2 class="h2" style="margin-top:20px;font-size:clamp(34px,4.4vw,60px)">Vaste prijs per unit.</h2>
-    <p class="lead" style="margin-top:18px">€299 excl. btw per unit, afstandsbediening inbegrepen. Verzending per bestelling, ongeacht het aantal: Nederland €9,50, België €18,50. Levering van Wit en Zwart vanaf 1 november.</p>
+    <p class="lead" style="margin-top:18px">€299 excl. btw per unit, afstandsbediening inbegrepen. Verzending per bestelling, ongeacht het aantal: Nederland €9,50, België €18,50. Wit en Zwart direct te bestellen, leverdatum per mail.</p>
     <p class="soft">Voor meerdere locaties of een levering in de vakantie maken we een offerte op maat.</p>
   </div>
   <table class="rv d1"><thead><tr><th>Aantal</th><th>Excl. btw</th><th>Incl. btw</th></tr></thead><tbody>{rows}</tbody></table>
