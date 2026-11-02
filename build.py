@@ -564,7 +564,8 @@ def scholen():
   <span class="eyebrow rv">Voor scholen en kinderopvang</span>
   <h1 class="h2 rv d1" style="margin:20px 0 24px">Een fris lokaal.<br>Zonder ventilator <em>op de vloer</em>.</h1>
   <p class="lead rv d2">Ceilingflow is een plafondventilator die in het standaard 60×60 systeemplafond past. Stil genoeg voor de les, buiten bereik van kinderen en binnen 5 minuten geplaatst.</p>
-  <div class="row rv d3"><a class="btn acc" href="#offerte">Offerte voor meerdere lokalen</a><a class="btn ghost" href="/ventilator/">Bekijk de ventilator</a></div>
+  <div class="row rv d3"><a class="btn acc" href="#offerte">Offerte voor meerdere lokalen</a><a class="btn ghost" href="/ventilator/" data-umami-event="scholen-direct-bestellen">Direct bestellen · €361,79 incl. btw</a></div>
+  <p class="rv d3" style="margin-top:14px;font-size:.92rem;opacity:.8">€299 excl. btw per unit · verzending NL €9,50 · btw-factuur op naam van school of opvang</p>
   <img class="hero-img rv" src="/img/school.webp" alt="Ceilingflow plafondventilator in het systeemplafond van een klaslokaal" fetchpriority="high">
 </div></section>
 
