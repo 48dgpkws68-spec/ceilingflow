@@ -113,7 +113,7 @@ def faq_block(items):
 def footer():
     return f'''<footer><div class="wrap">
   <div><a class="logo" href="/" style="color:var(--ink)">{LOGO}<span>Ceiling<i>flow</i></span></a><p style="margin-top:14px;max-width:26em">Ventilatie voor 60×60 systeemplafonds. Voor kantoren, scholen, kinderopvang en zorginstellingen.</p></div>
-  <div><h4>Product</h4><ul><li><a href="/ventilator/">Ceilingflow Ventilatie Unit</a></li><li><a href="/ventilator/#specs">Specificaties</a></li><li><a href="/#installatie">Installatie</a></li><li><a href="/scholen/">Voor scholen en kinderopvang</a></li></ul></div>
+  <div><h4>Product</h4><ul><li><a href="/ventilator/">Ceilingflow Ventilatie Unit</a></li><li><a href="/ventilator/#specs">Specificaties</a></li><li><a href="/#installatie">Installatie</a></li><li><a href="/scholen/">Voor scholen en kinderopvang</a></li><li><a href="/winter/">Plafondventilator in de winter</a></li></ul></div>
   <div><h4>Zakelijk</h4><ul><li><a href="/#offerte">Offerte aanvragen</a></li><li>Btw-factuur</li><li>Bulkbestellingen</li></ul></div>
   <div><h4>Contact</h4><ul><li><a href="mailto:{MAIL}">{MAIL}</a></li><li><a href="tel:+31634333809">{PHONE}</a></li></ul></div>
   <div class="big" aria-hidden="true">Ceilingflow</div>
@@ -291,7 +291,7 @@ def index():
   <span class="eyebrow rv">Toepassingen</span>
   <h2 class="h2 rv d1" style="margin-top:20px">Werkt overal waar<br>een <em>systeemplafond</em> hangt.</h2>
   <div class="apps">{apps_html}</div>
-  <p class="rv" style="margin-top:28px"><a class="btn ghost" href="/scholen/">Ceilingflow voor scholen en kinderopvang</a></p>
+  <p class="rv" style="margin-top:28px;display:flex;gap:12px;flex-wrap:wrap"><a class="btn ghost" href="/scholen/">Ceilingflow voor scholen en kinderopvang</a><a class="btn ghost" href="/winter/">Plafondventilator in de winter</a></p>
 </div></section>
 
 <section class="sec" id="product" style="padding-top:0"><div class="wrap">
@@ -605,6 +605,66 @@ def scholen():
 ''' + footer() + '</body>\n</html>\n'
     return h + body
 
+WINTER_FAQ = [
+    ("Heeft een plafondventilator zin in de winter?", "Ja. Warme lucht stijgt op en blijft onder het plafond hangen, terwijl het bij de vloer en de bureaus kouder aanvoelt. Ceilingflow zet die lucht in beweging, zodat de warmte van de verwarming beter verdeeld wordt over de ruimte."),
+    ("Welke stand gebruik je in de winter?", "Gebruik een lage snelheid. Dan mengt de warme lucht onder het plafond met de rest van de ruimte zonder dat je een koele luchtstroom voelt. Snelheid en richting stel je in met de meegeleverde afstandsbediening."),
+    ("Bespaar ik hiermee op de stookkosten?", "Dat hangt af van je ruimte, plafondhoogte en verwarming, dus we noemen geen percentage. Wat Ceilingflow wel doet: de warmte die al in de ruimte is, terugbrengen naar waar mensen zitten in plaats van onder het plafond te laten hangen."),
+    ("Ververst Ceilingflow ook de lucht?", "Nee. Ceilingflow laat de lucht in de ruimte circuleren. Hij voert geen buitenlucht aan en verlaagt CO2 niet, dus hij vervangt geen mechanische ventilatie of luchten."),
+    ("Kan ik hem nu bestellen en in de zomer gebruiken?", "Ja. Het is dezelfde unit voor zomer en winter. In de winter verdeelt hij de warmte, op warme dagen zorgt de luchtstroom voor verkoeling."),
+]
+
+
+def winter():
+    punten = [("Warmte naar beneden", "Warme lucht van de verwarming blijft onder het plafond hangen. Ceilingflow brengt die weer in beweging, naar de bureaus en tafels."),
+              ("Lage stand, geen tocht", "Op een lage snelheid meng je de lucht zonder koele luchtstroom. Je voelt geen wind, alleen een gelijkere temperatuur."),
+              ("Afstandsbediening", "Snelheid, richting en timer regel je vanaf je plek. Inbegrepen bij elke unit."),
+              ("Fluisterstil", "Onder 35 dB. Ook in de winterstand stoort hij niet tijdens vergaderingen of lessen."),
+              ("Klaar in 5 minuten", "Plafondtegel eruit, unit erin, stekker erin. Geen verbouwing midden in het stookseizoen."),
+              ("Eén unit, het hele jaar", "In de winter verdeelt hij de warmte, in de zomer koelt de luchtstroom. Geen tweede apparaat nodig.")]
+    p_html = ''.join(f'<article class="rv d{i % 3}"><h3>{a}</h3><p>{b}</p></article>' for i, (a, b) in enumerate(punten))
+    faq_ld = json.dumps({"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in WINTER_FAQ]}, ensure_ascii=False)
+    extra = SCHOOL_CSS + f'<script type="application/ld+json">{faq_ld}</script>'
+    extra += '<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://ceilingflow.nl/"},{"@type":"ListItem","position":2,"name":"Plafondventilator in de winter","item":"https://ceilingflow.nl/winter/"}]}</script>'
+    h = head('Plafondventilator in de winter · warme lucht terug naar beneden · Ceilingflow', 'Warme lucht blijft onder het plafond hangen. Een plafondventilator op lage stand brengt die terug naar beneden. Ceilingflow past in het 60x60 systeemplafond, onder 35 dB, €299 excl. btw.', '/winter/', extra)
+    body = nav(False) + f'''
+<main>
+<section class="sh"><div class="wrap">
+  <div class="crumb rv"><a href="/">Home</a> / Plafondventilator in de winter</div>
+  <span class="eyebrow rv">Stookseizoen</span>
+  <h1 class="h2 rv d1" style="margin:20px 0 24px">Warm aan het plafond.<br>Koud aan je <em>bureau</em>?</h1>
+  <p class="lead rv d2">Warme lucht stijgt op. In kantoren, klaslokalen en praktijkruimtes met een systeemplafond blijft de warmte van de verwarming daardoor boven hangen. Ceilingflow brengt die lucht weer in beweging, terug naar waar mensen zitten.</p>
+  <div class="row rv d3"><a class="btn acc" href="/ventilator/" data-umami-event="winter-bestellen">Bestellen · €361,79 incl. btw</a><a class="btn ghost" href="#offerte">Offerte voor meerdere ruimtes</a></div>
+  <p class="rv d3" style="margin-top:14px;font-size:.92rem;opacity:.8">€299 excl. btw per unit · verzending NL €9,50 · afstandsbediening inbegrepen</p>
+  <img class="hero-img rv" src="/img/kantoor.webp" alt="Ceilingflow plafondventilator in het systeemplafond van een kantoor" fetchpriority="high">
+</div></section>
+
+<section class="sec2"><div class="wrap">
+  <span class="eyebrow rv">Zo werkt het in de winter</span>
+  <h2 class="h2 rv d1" style="margin-top:20px">De warmte is er al.<br>Hij zit alleen <em>boven</em>.</h2>
+  <div class="vg">{p_html}</div>
+</div></section>
+
+<section class="sec2" style="padding-top:0"><div class="wrap eerlijk rv">
+  <div><span class="eyebrow">Eerlijk is eerlijk</span><h2 class="h2" style="margin-top:20px;font-size:clamp(34px,4.4vw,60px)">Wat Ceilingflow <em>niet</em> doet.</h2></div>
+  <div><p>Ceilingflow verwarmt niet zelf en we beloven geen vast besparingspercentage: dat hangt af van je ruimte, plafondhoogte en verwarming. Hij voert ook geen buitenlucht aan en verlaagt CO2 niet.</p><p>Wat hij wel doet: de warmte die je al betaalt gelijker over de ruimte verdelen, zonder losse ventilator op de vloer en zonder verbouwing.</p></div>
+</div></section>
+
+<section class="sec2" style="padding-top:0"><div class="wrap">
+  <span class="eyebrow rv">In 3 stappen</span>
+  <div class="st">
+    <div class="rv"><b>1</b><p>Plafondtegel eruit</p><span>Elk standaard 60×60 systeemplafond.</span></div>
+    <div class="rv d1"><b>2</b><p>Ceilingflow erin</p><span>Stekker in een stopcontact boven het plafond.</span></div>
+    <div class="rv d2"><b>3</b><p>Lage stand aan</p><span>Met de afstandsbediening, ook richting en timer.</span></div>
+  </div>
+  <p class="rv" style="margin-top:28px"><a class="btn ghost" href="/scholen/">Ceilingflow voor scholen en kinderopvang</a></p>
+</div></section>
+
+{offerte('Meerdere ruimtes voor deze winter?')}
+{faq_block(WINTER_FAQ)}
+</main>
+''' + footer() + '</body>\n</html>\n'
+    return h + body
+
 
 def simple(title, path, h1, text):
     return head(title, text, path, '<meta name="robots" content="noindex">') + nav(False) + f'''
@@ -623,6 +683,8 @@ def main():
     (ROOT / 'ventilator/index.html').write_text(pdp())
     (ROOT / 'scholen').mkdir(exist_ok=True)
     (ROOT / 'scholen/index.html').write_text(scholen())
+    (ROOT / 'winter').mkdir(exist_ok=True)
+    (ROOT / 'winter/index.html').write_text(winter())
     (ROOT / 'bedankt').mkdir(exist_ok=True)
     (ROOT / 'bedankt/index.html').write_text(simple('Bedankt · Ceilingflow', '/bedankt/', 'Bedankt voor je <em>aanvraag</em>.', 'We hebben je offerteaanvraag ontvangen en reageren binnen één werkdag.'))
     (ROOT / '404.html').write_text(simple('Pagina niet gevonden · Ceilingflow', '/404.html', 'Deze pagina <em>bestaat niet</em>.', 'De pagina die je zoekt is verplaatst of bestaat niet meer.'))
@@ -631,6 +693,7 @@ def main():
   <url><loc>{URL}/</loc><changefreq>weekly</changefreq><priority>1.0</priority></url>
   <url><loc>{URL}/ventilator/</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
   <url><loc>{URL}/scholen/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>{URL}/winter/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
 </urlset>
 ''')
     (ROOT / 'robots.txt').write_text(f'User-agent: *\nAllow: /\nDisallow: /bedankt/\n\nSitemap: {URL}/sitemap.xml\n')
