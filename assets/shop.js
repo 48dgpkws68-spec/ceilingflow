@@ -50,7 +50,7 @@ const CEILINGFLOW = {
   document.querySelectorAll('form[data-offerte]').forEach(f => {
     f.action = 'https://formsubmit.co/' + C.FORM_EMAIL;
     f.method = 'POST';
-    f.insertAdjacentHTML('afterbegin', `<input type="hidden" name="_subject" value="Offerteaanvraag Ceilingflow"><input type="hidden" name="_next" value="${C.NEXT}"><input type="hidden" name="_template" value="table"><input type="text" name="_honey" class="hp" tabindex="-1" autocomplete="off">`);
+    f.insertAdjacentHTML('afterbegin', `<input type="hidden" name="_autoresponse" value="Bedankt voor je offerteaanvraag bij Ceilingflow. We nemen binnen 1 werkdag persoonlijk contact met je op, met een offerte op maat voor jouw locatie en een btw-factuur voor je administratie. Ter oriëntatie: de Ceilingflow kost 299 euro excl. btw (361,79 euro incl. btw) per unit. Heb je een plattegrond of het aantal lokalen bij de hand? Beantwoord dan deze mail of bel +31 6 34 33 38 09. Met vriendelijke groet, Ceilingflow · https://ceilingflow.nl"><input type="hidden" name="_subject" value="Offerteaanvraag Ceilingflow"><input type="hidden" name="_next" value="${C.NEXT}"><input type="hidden" name="_template" value="table"><input type="text" name="_honey" class="hp" tabindex="-1" autocomplete="off">`);
   });
   function toOfferte(k, q) {
     const f = document.querySelector('form[data-offerte]');
