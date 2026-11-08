@@ -406,7 +406,9 @@ def pdp():
              ("Energiezuinig", "Borstelloze motor, recyclebaar ABS, RoHS- en CE-gecertificeerd."),
              ("Het hele jaar door", "Koeling in de zomer, betere warmteverdeling in de winter. Eén unit, twee functies.")]
     feats_html = ''.join(f'<article class="rv d{i % 3}"><h3>{a}</h3><p>{b}</p></article>' for i, (a, b) in enumerate(feats))
-    extra = PDP_CSS + f'<script type="application/ld+json">{product_ld()}</script>'
+    pdp_faq = [FAQ[i] for i in (0, 1, 5, 6, 9, 10)]
+    faq_ld = json.dumps({"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in pdp_faq]}, ensure_ascii=False)
+    extra = PDP_CSS + f'<script type="application/ld+json">{product_ld()}</script><script type="application/ld+json">{faq_ld}</script>'
     extra += '<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://ceilingflow.nl/"},{"@type":"ListItem","position":2,"name":"Ceilingflow Ventilatie Unit","item":"https://ceilingflow.nl/ventilator/"}]}</script>'
     h = head('Ceilingflow Ventilatie Unit · €299 excl. btw · Wit of Zwart', 'Bestel de Ceilingflow plafondventilator voor 60x60 systeemplafonds. €299 excl. btw (€361,79 incl.), Wit of Zwart, onder 35 dB, afstandsbediening inbegrepen.', '/ventilator/', extra)
     body = nav(False) + f'''
@@ -464,7 +466,7 @@ def pdp():
 </div></section>
 
 {offerte('Offerte voor meerdere lokalen')}
-{faq_block([FAQ[i] for i in (0, 1, 5, 6, 9, 10)])}
+{faq_block(pdp_faq)}
 
 <div class="mbar" id="mbar"><div class="t"><b>Ceilingflow · <span data-kleur-naam>Wit</span></b><span id="mTot">€299 excl. btw</span></div><button class="btn acc" type="button" id="mAdd" data-koop-label>In mandje</button></div>
 ''' + footer() + '''<script>
