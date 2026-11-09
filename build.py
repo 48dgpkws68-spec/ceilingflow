@@ -242,6 +242,7 @@ def index():
     <h1 class="rv d1">Frisse lucht.<br>Uit het <em>plafond</em>.</h1>
     <p class="lead rv d2">Ceilingflow past strak in je 60×60 systeemplafond. Voor scholen, kinderopvang, zorg en kantoren. Geen losse ventilatoren, geen kabels op de vloer.</p>
     <div class="row rv d3">{kleur_toggle()}<a class="btn acc" href="/ventilator/">Bekijk de ventilator</a><a class="btn ghost" href="#offerte">Offerte voor meerdere lokalen</a></div>
+    <p class="rv d3" style="margin-top:14px;font-size:.95rem"><a href="/scholen/#per-lokaal" data-umami-event="home-naar-scholen" style="text-decoration:underline">Voor scholen en kinderopvang: prijs per lokaal en direct bestellen</a></p>
   </div>
   <div class="stage rv" id="stage">
     <div class="grid"></div>
@@ -582,7 +583,7 @@ def scholen():
   <div><p>Ceilingflow laat de lucht in het lokaal circuleren. Hij voert geen buitenlucht aan en verlaagt CO2 niet. Hij vervangt dus geen mechanische ventilatie of het luchten via ramen.</p><p>Wat hij wel doet: een warm of benauwd lokaal aangenamer maken, zonder losse ventilatoren tussen de tafels en zonder verbouwing. In het stookseizoen brengt hij de warme lucht onder het plafond terug naar de leerlingen.</p></div>
 </div></section>
 
-<section class="sec2" style="padding-top:0"><div class="wrap kost">
+<section class="sec2" id="per-lokaal" style="padding-top:0"><div class="wrap kost">
   <div class="rv">
     <span class="eyebrow">Wat kost het</span>
     <h2 class="h2" style="margin-top:20px;font-size:clamp(34px,4.4vw,60px)">Vaste prijs per unit.</h2>
