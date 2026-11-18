@@ -113,7 +113,7 @@ def faq_block(items):
 def footer():
     return f'''<footer><div class="wrap">
   <div><a class="logo" href="/" style="color:var(--ink)">{LOGO}<span>Ceiling<i>flow</i></span></a><p style="margin-top:14px;max-width:26em">Ventilatie voor 60×60 systeemplafonds. Voor kantoren, scholen, kinderopvang en zorginstellingen.</p></div>
-  <div><h4>Product</h4><ul><li><a href="/ventilator/">Ceilingflow Ventilatie Unit</a></li><li><a href="/ventilator/#specs">Specificaties</a></li><li><a href="/#installatie">Installatie</a></li><li><a href="/scholen/">Voor scholen en kinderopvang</a></li><li><a href="/winter/">Plafondventilator in de winter</a></li></ul></div>
+  <div><h4>Product</h4><ul><li><a href="/ventilator/">Ceilingflow Ventilatie Unit</a></li><li><a href="/ventilator/#specs">Specificaties</a></li><li><a href="/#installatie">Installatie</a></li><li><a href="/scholen/">Voor scholen</a></li><li><a href="/kinderopvang/">Voor kinderopvang</a></li><li><a href="/winter/">Plafondventilator in de winter</a></li></ul></div>
   <div><h4>Zakelijk</h4><ul><li><a href="/#offerte">Offerte aanvragen</a></li><li>Btw-factuur</li><li>Bulkbestellingen</li></ul></div>
   <div><h4>Contact</h4><ul><li><a href="mailto:{MAIL}">{MAIL}</a></li><li><a href="tel:+31634333809">{PHONE}</a></li></ul></div>
   <div class="big" aria-hidden="true">Ceilingflow</div>
@@ -242,7 +242,7 @@ def index():
     <h1 class="rv d1">Frisse lucht.<br>Uit het <em>plafond</em>.</h1>
     <p class="lead rv d2">Ceilingflow past strak in je 60×60 systeemplafond. Voor scholen, kinderopvang, zorg en kantoren. Geen losse ventilatoren, geen kabels op de vloer.</p>
     <div class="row rv d3">{kleur_toggle()}<a class="btn acc" href="/ventilator/">Bekijk de ventilator</a><a class="btn ghost" href="#offerte">Offerte voor meerdere lokalen</a></div>
-    <p class="rv d3" style="margin-top:14px;font-size:.95rem"><a href="/scholen/#per-lokaal" data-umami-event="home-naar-scholen" style="text-decoration:underline">Voor scholen en kinderopvang: prijs per lokaal en direct bestellen</a></p>
+    <p class="rv d3" style="margin-top:14px;font-size:.95rem"><a href="/scholen/#per-lokaal" data-umami-event="home-naar-scholen" style="text-decoration:underline">Voor scholen: prijs per lokaal</a> · <a href="/kinderopvang/#per-groep" data-umami-event="home-naar-kdv" style="text-decoration:underline">Voor kinderopvang: prijs per groep</a></p>
   </div>
   <div class="stage rv" id="stage">
     <div class="grid"></div>
@@ -292,7 +292,7 @@ def index():
   <span class="eyebrow rv">Toepassingen</span>
   <h2 class="h2 rv d1" style="margin-top:20px">Werkt overal waar<br>een <em>systeemplafond</em> hangt.</h2>
   <div class="apps">{apps_html}</div>
-  <p class="rv" style="margin-top:28px;display:flex;gap:12px;flex-wrap:wrap"><a class="btn ghost" href="/scholen/">Ceilingflow voor scholen en kinderopvang</a><a class="btn ghost" href="/winter/">Plafondventilator in de winter</a></p>
+  <p class="rv" style="margin-top:28px;display:flex;gap:12px;flex-wrap:wrap"><a class="btn ghost" href="/scholen/">Ceilingflow voor scholen</a><a class="btn ghost" href="/kinderopvang/">Ceilingflow voor kinderopvang</a><a class="btn ghost" href="/winter/">Plafondventilator in de winter</a></p>
 </div></section>
 
 <section class="sec" id="product" style="padding-top:0"><div class="wrap">
@@ -608,6 +608,78 @@ def scholen():
 ''' + footer() + '</body>\n</html>\n'
     return h + body
 
+KDV_FAQ = [
+    ("Is Ceilingflow stil genoeg voor de slaapruimte?", "Ceilingflow werkt onder 35 dB, vergelijkbaar met een zachte fluisterstem. Op de laagste stand is hij geschikt voor de groepsruimte tijdens het slaapuurtje en voor de slaapkamer van de opvang."),
+    ("Kunnen kinderen bij de ventilator komen?", "Nee. Ceilingflow zit in het systeemplafond, buiten bereik van kinderen. Er staat niets op de vloer en er lopen geen snoeren door de groepsruimte, dus ook geen struikelgevaar. De unit is IP44, CE- en RoHS-gecertificeerd."),
+    ("Ververst Ceilingflow de lucht in de groepsruimte?", "Nee. Ceilingflow brengt de lucht in de ruimte in beweging, hij voert geen buitenlucht aan en verlaagt CO2 niet. Hij vervangt dus geen ventilatie of het luchten via ramen, maar maakt een warme of benauwde groepsruimte wel aangenamer."),
+    ("Wat kost het per groepsruimte?", "Eén unit kost €299 excl. btw (€361,79 incl. btw), afstandsbediening inbegrepen. Verzending is per bestelling, ongeacht het aantal: Nederland €9,50, België €18,50. Voor meerdere groepen of locaties maken we een offerte op maat."),
+    ("Wie plaatst de unit?", "Dat kan de huismeester, een klusjesman of de installateur. Plafondtegel eruit, Ceilingflow in het 60×60 rooster, stekker in het stopcontact boven het plafond. Gemiddeld minder dan 5 minuten per unit, zonder verbouwing."),
+    ("Kunnen we op factuur bestellen?", "Ja. Je ontvangt altijd een btw-factuur op naam van de opvang. Voor meerdere locaties vraag je een zakelijke offerte aan, je krijgt binnen één werkdag een voorstel."),
+]
+
+
+def kinderopvang():
+    voordelen = [("Stil tijdens het slaapuurtje", "Onder 35 dB. Op een lage stand draait hij door terwijl de kinderen slapen."),
+                 ("Buiten bereik", "De unit zit in het plafond. Peuters en dreumesen kunnen er niet aan zitten of aan trekken."),
+                 ("Niets op de vloer", "Geen staande ventilator in de speelhoek, geen snoer over de grond, geen struikelgevaar."),
+                 ("Klaar in 5 minuten", "Plafondtegel eruit, unit erin, stekker erin. Plaatsen kan buiten openingstijd."),
+                 ("Zomer en winter", "Verkoeling door luchtstroom op warme dagen, warme lucht van het plafond naar beneden in het stookseizoen."),
+                 ("Afstandsbediening", "Inbegrepen. De pedagogisch medewerker regelt snelheid, richting en timer zonder ladder.")]
+    v_html = ''.join(f'<article class="rv d{i % 3}"><h3>{a}</h3><p>{b}</p></article>' for i, (a, b) in enumerate(voordelen))
+    rows = ''.join(f'<tr><td>{n} {"groepsruimte" if n == 1 else "groepsruimtes"}</td><td>€{299 * n:,}'.replace(',', '.') + f'</td><td>€{361.79 * n:,.2f}'.replace(',', 'X').replace('.', ',').replace('X', '.') + '</td></tr>' for n in (1, 3, 6, 12))
+    faq_ld = json.dumps({"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in KDV_FAQ]}, ensure_ascii=False)
+    extra = SCHOOL_CSS + f'<script type="application/ld+json">{faq_ld}</script>'
+    extra += '<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://ceilingflow.nl/"},{"@type":"ListItem","position":2,"name":"Kinderopvang","item":"https://ceilingflow.nl/kinderopvang/"}]}</script>'
+    h = head('Plafondventilator voor de kinderopvang · Ceilingflow', 'Stille plafondventilator voor de groepsruimte van kinderopvang en peuteropvang. Onder 35 dB voor het slaapuurtje, buiten bereik van kinderen, niets op de vloer. €299 excl. btw per groepsruimte.', '/kinderopvang/', extra)
+    body = nav(False) + f'''
+<main>
+<section class="sh"><div class="wrap">
+  <div class="crumb rv"><a href="/">Home</a> / Kinderopvang</div>
+  <span class="eyebrow rv">Voor kinderopvang en peuteropvang</span>
+  <h1 class="h2 rv d1" style="margin:20px 0 24px">Een frisse groepsruimte.<br>Ook tijdens het <em>slaapuurtje</em>.</h1>
+  <p class="lead rv d2">Ceilingflow is een plafondventilator die in het standaard 60×60 systeemplafond past. Stil genoeg voor slapende kinderen, buiten bereik van kleine handjes en binnen 5 minuten geplaatst.</p>
+  <div class="row rv d3"><a class="btn acc" href="#offerte" data-umami-event="kdv-offerte">Offerte voor meerdere groepen</a><a class="btn ghost" href="/ventilator/" data-umami-event="kdv-direct-bestellen">Direct bestellen · €361,79 incl. btw</a></div>
+  <p class="rv d3" style="margin-top:14px;font-size:.92rem;opacity:.8">€299 excl. btw per unit · verzending NL €9,50 · btw-factuur op naam van de opvang</p>
+  <img class="hero-img rv" src="/img/kinderopvang.webp" alt="Ceilingflow plafondventilator in het systeemplafond van een groepsruimte in de kinderopvang" fetchpriority="high">
+</div></section>
+
+<section class="sec2"><div class="wrap">
+  <span class="eyebrow rv">Waarom in de groepsruimte</span>
+  <h2 class="h2 rv d1" style="margin-top:20px">Gemaakt voor<br>de <em>kleinsten</em>.</h2>
+  <div class="vg">{v_html}</div>
+</div></section>
+
+<section class="sec2" style="padding-top:0"><div class="wrap eerlijk rv">
+  <div><span class="eyebrow">Eerlijk is eerlijk</span><h2 class="h2" style="margin-top:20px;font-size:clamp(34px,4.4vw,60px)">Wat Ceilingflow <em>niet</em> doet.</h2></div>
+  <div><p>Ceilingflow laat de lucht in de groepsruimte circuleren. Hij voert geen buitenlucht aan en verlaagt CO2 niet. Hij vervangt dus geen ventilatie of het luchten via ramen.</p><p>Wat hij wel doet: een warme of benauwde groepsruimte aangenamer maken, zonder losse ventilator tussen de kinderen en zonder verbouwing. In het stookseizoen brengt hij de warme lucht onder het plafond terug naar de speelvloer.</p></div>
+</div></section>
+
+<section class="sec2" id="per-groep" style="padding-top:0"><div class="wrap kost">
+  <div class="rv">
+    <span class="eyebrow">Wat kost het</span>
+    <h2 class="h2" style="margin-top:20px;font-size:clamp(34px,4.4vw,60px)">Vaste prijs per groepsruimte.</h2>
+    <p class="lead" style="margin-top:18px">€299 excl. btw per unit, afstandsbediening inbegrepen. Verzending per bestelling, ongeacht het aantal: Nederland €9,50, België €18,50. Wit en Zwart direct te bestellen, leverdatum per mail.</p>
+    <p class="soft">Meerdere locaties of plaatsen in een sluitingsweek? Dan maken we een offerte op maat.</p>
+  </div>
+  <table class="rv d1"><thead><tr><th>Aantal</th><th>Excl. btw</th><th>Incl. btw</th></tr></thead><tbody>{rows}</tbody></table>
+</div></section>
+
+<section class="sec2" style="padding-top:0"><div class="wrap">
+  <span class="eyebrow rv">Zo gaat het</span>
+  <div class="st">
+    <div class="rv"><b>1</b><p>Offerte aanvragen</p><span>Aantal groepen en locaties, reactie binnen 1 werkdag.</span></div>
+    <div class="rv d1"><b>2</b><p>Levering</p><span>Wit of Zwart, met btw-factuur voor de administratie.</span></div>
+    <div class="rv d2"><b>3</b><p>Plaatsen</p><span>Buiten openingstijd. Gemiddeld 5 minuten per groepsruimte.</span></div>
+  </div>
+  <p class="rv" style="margin-top:28px;display:flex;gap:12px;flex-wrap:wrap"><a class="btn ghost" href="/scholen/">Ceilingflow voor scholen</a><a class="btn ghost" href="/winter/">Plafondventilator in de winter</a></p>
+</div></section>
+
+{offerte('Offerte voor uw kinderopvang')}
+{faq_block(KDV_FAQ)}
+</main>
+''' + footer() + '</body>\n</html>\n'
+    return h + body
+
 WINTER_FAQ = [
     ("Heeft een plafondventilator zin in de winter?", "Ja. Warme lucht stijgt op en blijft onder het plafond hangen, terwijl het bij de vloer en de bureaus kouder aanvoelt. Ceilingflow zet die lucht in beweging, zodat de warmte van de verwarming beter verdeeld wordt over de ruimte."),
     ("Welke stand gebruik je in de winter?", "Gebruik een lage snelheid. Dan mengt de warme lucht onder het plafond met de rest van de ruimte zonder dat je een koele luchtstroom voelt. Snelheid en richting stel je in met de meegeleverde afstandsbediening."),
@@ -659,7 +731,7 @@ def winter():
     <div class="rv d1"><b>2</b><p>Ceilingflow erin</p><span>Stekker in een stopcontact boven het plafond.</span></div>
     <div class="rv d2"><b>3</b><p>Lage stand aan</p><span>Met de afstandsbediening, ook richting en timer.</span></div>
   </div>
-  <p class="rv" style="margin-top:28px"><a class="btn ghost" href="/scholen/">Ceilingflow voor scholen en kinderopvang</a></p>
+  <p class="rv" style="margin-top:28px;display:flex;gap:12px;flex-wrap:wrap"><a class="btn ghost" href="/scholen/">Ceilingflow voor scholen</a><a class="btn ghost" href="/kinderopvang/">Ceilingflow voor kinderopvang</a></p>
 </div></section>
 
 {offerte('Meerdere ruimtes voor deze winter?')}
@@ -686,6 +758,8 @@ def main():
     (ROOT / 'ventilator/index.html').write_text(pdp())
     (ROOT / 'scholen').mkdir(exist_ok=True)
     (ROOT / 'scholen/index.html').write_text(scholen())
+    (ROOT / 'kinderopvang').mkdir(exist_ok=True)
+    (ROOT / 'kinderopvang/index.html').write_text(kinderopvang())
     (ROOT / 'winter').mkdir(exist_ok=True)
     (ROOT / 'winter/index.html').write_text(winter())
     (ROOT / 'bedankt').mkdir(exist_ok=True)
@@ -696,6 +770,7 @@ def main():
   <url><loc>{URL}/</loc><changefreq>weekly</changefreq><priority>1.0</priority></url>
   <url><loc>{URL}/ventilator/</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
   <url><loc>{URL}/scholen/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>{URL}/kinderopvang/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>{URL}/winter/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
 </urlset>
 ''')
