@@ -20,11 +20,13 @@ FAQ = [
     ("Is de installatie moeilijk?", "Nee. Ceilingflow plaats je in het bestaande 60×60 plafondrooster, net als een verlichtingsarmatuur. Installatie duurt gemiddeld minder dan 5 minuten per unit. Er zijn geen bouwkundige aanpassingen of speciaal gereedschap nodig."),
     ("Is er een speciale prijs voor meerdere units?", "Bij afname van meerdere units vraag je een zakelijke offerte aan. We maken een offerte op maat. Gebruik het offerteformulier of bel ons direct."),
     ("Kan ik een offerte aanvragen?", "Ja, via het offerteformulier op deze site. Geef het gewenste aantal units, de locatie en je contactgegevens op. Je krijgt binnen één werkdag een offerte op maat."),
-    ("Hoe stil is Ceilingflow tijdens gebruik?", "Ceilingflow werkt onder 35 dB, vergelijkbaar met een zachte fluisterstem. Geschikt tijdens vergaderingen, lessen, behandelingen en in slaapruimtes van de kinderopvang."),
+    ("Hoe stil is Ceilingflow tijdens gebruik?", "Op de laagste stand werkt Ceilingflow op 35 dB(A), vergelijkbaar met een zachte fluisterstem. Geschikt tijdens vergaderingen, lessen, behandelingen en in slaapruimtes van de kinderopvang. Op de hoogste stand is het 47 dB(A): die hoor je wel, bedoeld voor warme middagen. De stand kies je zelf met de afstandsbediening."),
+    ("Wat kost Ceilingflow aan stroom?", "Weinig. Op de laagste stand gebruikt hij 27 W, op de hoogste 41 W. Een werkdag van 8 uur op de hoogste stand is ongeveer 0,33 kWh. Vermenigvuldig dat met je eigen stroomtarief en je weet wat een unit per dag kost. Hij gaat in het stopcontact (220 tot 230 V), een aparte groep is niet nodig."),
+    ("Kan hij in de winter uit tot het voorjaar?", "Laat hem liever aan op de laagste stand. Warme lucht van de verwarming stijgt naar het plafond; op de laagste stand brengt Ceilingflow die warmte terug naar werkhoogte zonder dat je een koele luchtstroom voelt. Hoe hoger de ruimte, hoe groter het effect. Meer uitleg staat op ceilingflow.nl/winter/."),
     ("Heeft Ceilingflow veel onderhoud nodig?", "Het onderhoud is minimaal. De luchtinlaat een paar keer per jaar reinigen is genoeg. Er zijn geen slijtende onderdelen die regelmatig vervangen moeten worden."),
 ]
 
-SPECS = [("Formaat", "60 × 60 cm"), ("Geluidsniveau", "< 35 dB"), ("Installatietijd", "< 5 minuten"), ("Bescherming", "IP44"),
+SPECS = [("Formaat", "60 × 60 cm"), ("Geluidsniveau", "35 tot 47 dB(A)"), ("Vermogen", "27 tot 41 W"), ("Installatietijd", "< 5 minuten"), ("Bescherming", "IP44"),
          ("Motor", "Borstelloos, CE / LVD"), ("Materiaal", "ABS, RoHS gecertificeerd"), ("Kleur", "Wit of Zwart"),
          ("Inbegrepen", "Afstandsbediening"), ("Aansluiting", "Stekker in het stopcontact"), ("SKU", "CF-6060-001")]
 
@@ -407,7 +409,7 @@ def pdp():
              ("Energiezuinig", "Borstelloze motor, recyclebaar ABS, RoHS- en CE-gecertificeerd."),
              ("Het hele jaar door", "Koeling in de zomer, betere warmteverdeling in de winter. Eén unit, twee functies.")]
     feats_html = ''.join(f'<article class="rv d{i % 3}"><h3>{a}</h3><p>{b}</p></article>' for i, (a, b) in enumerate(feats))
-    pdp_faq = [FAQ[i] for i in (0, 1, 5, 6, 9, 10)]
+    pdp_faq = [FAQ[i] for i in (0, 1, 5, 6, 9, 10, 11, 12)]
     faq_ld = json.dumps({"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in pdp_faq]}, ensure_ascii=False)
     extra = PDP_CSS + f'<script type="application/ld+json">{product_ld()}</script><script type="application/ld+json">{faq_ld}</script>'
     extra += '<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://ceilingflow.nl/"},{"@type":"ListItem","position":2,"name":"Ceilingflow Ventilatie Unit","item":"https://ceilingflow.nl/ventilator/"}]}</script>'
