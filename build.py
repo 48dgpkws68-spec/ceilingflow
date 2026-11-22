@@ -435,6 +435,7 @@ def pdp():
     </div>
     <p class="tot" id="tot"></p>
     <button class="alt" type="button" data-offerte-knop>Zakelijke offerte voor meerdere lokalen</button>
+    <p style="margin-top:10px;font-size:.9rem;opacity:.85">Liever via bol.com bestellen? Ceilingflow Wit staat ook in onze eigen bol-winkel (Pegasus Depot). <a href="https://www.bol.com/nl/nl/p/pegasus-depot-ceilingflow-plafondventilator-595-x-595-mm-voor-systeemplafonds-plug-and-play-met-afstandsbediening-wit/9300000401948628/" target="_blank" rel="noopener" data-umami-event="bol-alternatief-klik" data-umami-event-plek="ventilator" style="text-decoration:underline">Bekijk op bol.com</a></p>
     <div class="eta"><span class="dot"></span><span>Ceilingflow <span data-kleur-naam>Wit</span> direct te bestellen · leverdatum per mail na bestelling</span></div>
     <div class="usps">
       <div><b>NL €9,50</b>verzending per bestelling</div>
@@ -571,6 +572,7 @@ def scholen():
   <p class="lead rv d2">Ceilingflow is een plafondventilator die in het standaard 60×60 systeemplafond past. Stil genoeg voor de les, buiten bereik van kinderen en binnen 5 minuten geplaatst.</p>
   <div class="row rv d3"><a class="btn acc" href="#offerte">Offerte voor meerdere lokalen</a><a class="btn ghost" href="/ventilator/" data-umami-event="scholen-direct-bestellen">Direct bestellen · €361,79 incl. btw</a></div>
   <p class="rv d3" style="margin-top:14px;font-size:.92rem;opacity:.8">€299 excl. btw per unit · verzending NL €9,50 · btw-factuur op naam van school of opvang</p>
+  <p class="rv d3" style="margin-top:10px;font-size:.9rem;opacity:.85">Liever via bol.com bestellen? Ceilingflow Wit staat ook in onze eigen bol-winkel (Pegasus Depot). <a href="https://www.bol.com/nl/nl/p/pegasus-depot-ceilingflow-plafondventilator-595-x-595-mm-voor-systeemplafonds-plug-and-play-met-afstandsbediening-wit/9300000401948628/" target="_blank" rel="noopener" data-umami-event="bol-alternatief-klik" data-umami-event-plek="scholen" style="text-decoration:underline">Bekijk op bol.com</a></p>
   <img class="hero-img rv" src="/img/school.webp" alt="Ceilingflow plafondventilator in het systeemplafond van een klaslokaal" fetchpriority="high">
 </div></section>
 
@@ -642,6 +644,7 @@ def kinderopvang():
   <p class="lead rv d2">Ceilingflow is een plafondventilator die in het standaard 60×60 systeemplafond past. Stil genoeg voor slapende kinderen, buiten bereik van kleine handjes en binnen 5 minuten geplaatst.</p>
   <div class="row rv d3"><a class="btn acc" href="#offerte" data-umami-event="kdv-offerte">Offerte voor meerdere groepen</a><a class="btn ghost" href="/ventilator/" data-umami-event="kdv-direct-bestellen">Direct bestellen · €361,79 incl. btw</a></div>
   <p class="rv d3" style="margin-top:14px;font-size:.92rem;opacity:.8">€299 excl. btw per unit · verzending NL €9,50 · btw-factuur op naam van de opvang</p>
+  <p class="rv d3" style="margin-top:10px;font-size:.9rem;opacity:.85">Liever via bol.com bestellen? Ceilingflow Wit staat ook in onze eigen bol-winkel (Pegasus Depot). <a href="https://www.bol.com/nl/nl/p/pegasus-depot-ceilingflow-plafondventilator-595-x-595-mm-voor-systeemplafonds-plug-and-play-met-afstandsbediening-wit/9300000401948628/" target="_blank" rel="noopener" data-umami-event="bol-alternatief-klik" data-umami-event-plek="kinderopvang" style="text-decoration:underline">Bekijk op bol.com</a></p>
   <img class="hero-img rv" src="/img/kinderopvang.webp" alt="Ceilingflow plafondventilator in het systeemplafond van een groepsruimte in de kinderopvang" fetchpriority="high">
 </div></section>
 
