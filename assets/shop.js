@@ -17,6 +17,14 @@ const CEILINGFLOW = {
     {k: 'zwart', n: 'Zwart', v: C.VARIANT_ZWART, sw: '#151617'}
   ];
   const byK = Object.fromEntries(COLORS.map(c => [c.k, c]));
+  /* producten in het mandje: de twee Ceilingflow-kleuren + luchtreinigers (prijzen incl. btw) */
+  const ITEMS = Object.fromEntries([
+    ...COLORS.map(c => [c.k, {k: c.k, v: c.v, nm: 'Ceilingflow', sub: c.n, inc: C.PRICE_INC, img: c.k}]),
+    ['lr600', {k: 'lr600', v: '65752934711645', nm: 'Luchtreiniger Groot', sub: 'H13 HEPA · 42 tot 74 m²', inc: 359, img: 'lr600'}],
+    ['lr125', {k: 'lr125', v: '65752934482269', nm: 'Luchtreiniger Klein', sub: 'H13 HEPA · 8 tot 15 m²', inc: 132, img: 'lr125'}]
+  ]);
+  ITEMS.wit.inc = ITEMS.zwart.inc = C.PRICE_INC;
+  const exOf = i => Math.round(i.inc / 1.21 * 100) / 100;
   const READY = COLORS.every(c => /^\d+$/.test(String(c.v)));
   const eur = n => '€' + n.toLocaleString('nl-NL', {minimumFractionDigits: 2, maximumFractionDigits: 2});
   const root = document.documentElement;
@@ -65,12 +73,13 @@ const CEILINGFLOW = {
 
   /* ---------- winkelmandje ---------- */
   let cart = [];
-  try { cart = JSON.parse(localStorage.getItem('cf_cart') || '[]').filter(l => byK[l.k] && l.q > 0); } catch (e) {}
+  try { cart = JSON.parse(localStorage.getItem('cf_cart') || '[]').filter(l => ITEMS[l.k] && l.q > 0); } catch (e) {}
   const save = () => { try { localStorage.setItem('cf_cart', JSON.stringify(cart)); } catch (e) {} render(); };
   const count = () => cart.reduce((s, l) => s + l.q, 0);
-  const checkoutUrl = lines => C.SHOP + '/cart/' + lines.map(l => byK[l.k].v + ':' + l.q).join(',');
+  const checkoutUrl = lines => C.SHOP + '/cart/' + lines.map(l => ITEMS[l.k].v + ':' + l.q).join(',');
   function add(k, q) {
-    if (!READY) { toOfferte(k, q); return; }
+    if (!ITEMS[k]) return;
+    if (!READY && byK[k]) { toOfferte(k, q); return; }
     const l = cart.find(x => x.k === k);
     if (l) l.q = Math.min(99, l.q + q); else cart.push({k, q: Math.min(99, q)});
     save(); open();
@@ -122,14 +131,14 @@ const CEILINGFLOW = {
   function render() {
     const n = count();
     document.querySelectorAll('[data-cart-count]').forEach(b => { const o = b.textContent; b.textContent = n || ''; if (n && o !== String(n)) { b.classList.remove('cfc-bump'); void b.offsetWidth; b.classList.add('cfc-bump'); } });
-    L.innerHTML = cart.length ? cart.map(l => { const c = byK[l.k]; return `
-      <div class="cfc-i"><img src="${BASE}img/${c.k}.webp" alt="">
-        <div><div class="nm">Ceilingflow</div><div class="cl">${c.n}</div>
+    L.innerHTML = cart.length ? cart.map(l => { const c = ITEMS[l.k]; return `
+      <div class="cfc-i"><img src="${BASE}img/${c.img}.webp" alt="">
+        <div><div class="nm">${c.nm}</div><div class="cl">${c.sub}</div>
           <div class="cfc-q"><button type="button" data-q="${l.k}" data-d="-1" aria-label="Minder">−</button><span>${l.q}</span><button type="button" data-q="${l.k}" data-d="1" aria-label="Meer">+</button></div></div>
-        <div class="pr">${eur(C.PRICE_EX * l.q)}<button type="button" class="rm" data-rm="${l.k}">Verwijder</button></div></div>`; }).join('')
+        <div class="pr">${eur(exOf(c) * l.q)}<button type="button" class="rm" data-rm="${l.k}">Verwijder</button></div></div>`; }).join('')
       : '<div class="cfc-e">Je mandje is nog leeg.</div>';
-    document.getElementById('cfcEx').textContent = eur(C.PRICE_EX * n);
-    document.getElementById('cfcInc').textContent = eur(C.PRICE_INC * n);
+    document.getElementById('cfcEx').textContent = eur(cart.reduce((s, l) => s + exOf(ITEMS[l.k]) * l.q, 0));
+    document.getElementById('cfcInc').textContent = eur(cart.reduce((s, l) => s + ITEMS[l.k].inc * l.q, 0));
     const go = document.getElementById('cfcGo'); go.href = cart.length ? checkoutUrl(cart) : '#'; go.setAttribute('aria-disabled', !cart.length);
   }
   L.addEventListener('click', e => {
@@ -152,5 +161,5 @@ const CEILINGFLOW = {
   if (!READY) document.querySelectorAll('[data-koop-label]').forEach(b => b.textContent = 'Offerte aanvragen');
   render();
 
-  window.CF = {COLORS, READY, add, open, close, checkoutUrl, eur, setKleur, toOfferte, C};
+  window.CF = {COLORS, ITEMS, READY, add, open, close, checkoutUrl, eur, setKleur, toOfferte, C};
 })();

@@ -65,7 +65,7 @@ def nav(home=True):
     return f'''<div class="topbar">Beide kleuren direct te bestellen · leverdatum volgt per mail</div>
 <nav class="main"><div class="wrap">
   <a class="logo" href="/" aria-label="Ceilingflow home">{LOGO}<span>Ceiling<i>flow</i></span></a>
-  <div class="navl"><a href="{p}#oplossing">Oplossing</a><a href="{p}#toepassingen">Toepassingen</a><a href="/ventilator/">Ventilator</a><a href="{p}#offerte">Zakelijk</a><a href="{p}#faq">FAQ</a></div>
+  <div class="navl"><a href="{p}#oplossing">Oplossing</a><a href="{p}#toepassingen">Toepassingen</a><a href="/ventilator/">Ventilator</a><a href="/luchtreiniger/">Luchtreiniger</a><a href="{p}#offerte">Zakelijk</a><a href="{p}#faq">FAQ</a></div>
   <div class="navr">
     <a class="btn acc" href="/ventilator/">Bestel</a>
     <button class="cartbtn" type="button" data-cart-open aria-label="Winkelmandje" hidden><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M5 8h14l-1.2 11.2a2 2 0 0 1-2 1.8H8.2a2 2 0 0 1-2-1.8z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg><span class="cc" data-cart-count></span></button>
@@ -115,7 +115,7 @@ def faq_block(items):
 def footer():
     return f'''<footer><div class="wrap">
   <div><a class="logo" href="/" style="color:var(--ink)">{LOGO}<span>Ceiling<i>flow</i></span></a><p style="margin-top:14px;max-width:26em">Ventilatie voor 60×60 systeemplafonds. Voor kantoren, scholen, kinderopvang en zorginstellingen.</p></div>
-  <div><h4>Product</h4><ul><li><a href="/ventilator/">Ceilingflow Ventilatie Unit</a></li><li><a href="/ventilator/#specs">Specificaties</a></li><li><a href="/#installatie">Installatie</a></li><li><a href="/scholen/">Voor scholen</a></li><li><a href="/kinderopvang/">Voor kinderopvang</a></li><li><a href="/winter/">Plafondventilator in de winter</a></li></ul></div>
+  <div><h4>Product</h4><ul><li><a href="/ventilator/">Ceilingflow Ventilatie Unit</a></li><li><a href="/ventilator/#specs">Specificaties</a></li><li><a href="/#installatie">Installatie</a></li><li><a href="/scholen/">Voor scholen</a></li><li><a href="/kinderopvang/">Voor kinderopvang</a></li><li><a href="/winter/">Plafondventilator in de winter</a></li><li><a href="/luchtreiniger/">Luchtreiniger H13 HEPA</a></li></ul></div>
   <div><h4>Zakelijk</h4><ul><li><a href="/#offerte">Offerte aanvragen</a></li><li>Btw-factuur</li><li>Bulkbestellingen</li></ul></div>
   <div><h4>Contact</h4><ul><li><a href="mailto:{MAIL}">{MAIL}</a></li><li><a href="tel:+31634333809">{PHONE}</a></li></ul></div>
   <div class="big" aria-hidden="true">Ceilingflow</div>
@@ -746,6 +746,89 @@ def winter():
     return h + body
 
 
+LR = [
+    {"k": "lr600", "naam": "Luchtreiniger Groot", "ruimte": "42 tot 74 m²", "inc": 359, "ex": "296,69", "inc_s": "359,00", "sku": "24-0600",
+     "voor": "Klaslokalen, vergaderruimtes, groepsruimtes en open kantoren",
+     "specs": [("Ruimte", "42 tot 74 m²"), ("Filter", "H13 HEPA + actieve kool + anionen"), ("CADR fijnstof", "600 m³/u"), ("CADR geurstoffen (TVOC)", "200 tot 390 m³/u"), ("Geluid", "32,9 dB (slaapstand) tot 69,5 dB"), ("Standen", "6, met afstandsbediening"), ("Vermogen", "60 W, 220-240 V"), ("Afmetingen", "479 × 269 × 710 mm, 10,5 kg, op wieltjes"), ("Extra", "kinderslot, filtermelding")]},
+    {"k": "lr125", "naam": "Luchtreiniger Klein", "ruimte": "8 tot 15 m²", "inc": 132, "ex": "109,09", "inc_s": "132,00", "sku": "24-0125",
+     "voor": "Werkplekken, spreekkamers, slaapkamers en kleine kantoren",
+     "specs": [("Ruimte", "8 tot 15 m²"), ("Filter", "H13 HEPA + actieve kool"), ("CADR fijnstof", "125 m³/u"), ("CADR geurstoffen (TVOC)", "40 tot 60 m³/u"), ("Geluid", "27 / 35 / 42 dB"), ("Standen", "3"), ("Vermogen", "25 W, met adapter"), ("Afmetingen", "190 × 200 × 313 mm, 1,8 kg"), ("Extra", "kinderslot, 360° luchtinlaat")]},
+]
+LR_FAQ = [
+    ("Wat is het verschil met de Ceilingflow?", "De Ceilingflow verplaatst lucht: hij koelt in de zomer en brengt warme lucht in de winter terug naar beneden. Een luchtreiniger filtert de lucht: fijnstof, pollen, huisstof, schimmelsporen en geuren blijven achter in het filter. Samen zorgen ze voor frisse én gelijkmatig verdeelde lucht."),
+    ("Welke maat heb ik nodig?", "De Groot is voor ruimtes van 42 tot 74 m², zoals een klaslokaal of groepsruimte. De Klein is voor 8 tot 15 m², zoals een spreekkamer, werkplek of slaapkamer. Twijfel je? Vraag een offerte aan en we rekenen het per ruimte voor je uit."),
+    ("Haalt een luchtreiniger CO2 weg?", "Nee. Een luchtreiniger filtert deeltjes en geurstoffen, maar voert geen buitenlucht aan. Voor CO2 blijft ventileren met buitenlucht nodig."),
+    ("Wat kost verzending?", "Verzending kost per bestelling, ongeacht het aantal: Nederland €9,50, België €18,50, Duitsland en de rest van West-Europa €24,50, overige EU-landen €34,50. Je kunt luchtreinigers en Ceilingflow samen in één bestelling afrekenen."),
+    ("Krijg ik een btw-factuur?", "Ja. Bij elke bestelling krijg je een factuur met btw. Voor meerdere stuks of locaties maken we graag een offerte op maat."),
+]
+LR_CSS = """<style>
+.lrg{display:grid;gap:28px;margin-top:40px}
+@media(min-width:900px){.lrg{grid-template-columns:1fr 1fr}}
+.lrc{background:var(--card,#fff);border-radius:28px;overflow:hidden;box-shadow:0 1px 0 rgba(0,0,0,.06),0 30px 60px -40px rgba(0,0,0,.35);display:flex;flex-direction:column}
+.lrc img{width:100%;aspect-ratio:4/3;object-fit:cover;background:#f1f1f0}
+.lrc .in{padding:26px 26px 30px;display:flex;flex-direction:column;gap:14px;flex:1}
+.lrc h2{font-size:clamp(28px,3vw,38px);letter-spacing:-.04em;margin:0}
+.lrc .vr{opacity:.7;margin:0}
+.lrc .pr b{font-size:34px;letter-spacing:-.04em}
+.lrc .pr span{display:block;font-size:.92rem;opacity:.7}
+.lrc table{width:100%;border-collapse:collapse;font-size:.93rem}
+.lrc td{padding:8px 0;border-bottom:1px solid rgba(0,0,0,.08);vertical-align:top}
+.lrc td:first-child{opacity:.65;padding-right:14px;white-space:nowrap}
+.lrc .act{display:flex;gap:10px;flex-wrap:wrap;margin-top:auto;padding-top:8px}
+.lrq{display:inline-flex;align-items:center;border-radius:999px;box-shadow:inset 0 0 0 1px rgba(0,0,0,.18)}
+.lrq button{width:42px;height:46px;border:0;background:none;font-size:18px;cursor:pointer;color:inherit}
+.lrq span{min-width:26px;text-align:center;font-weight:600}
+</style>"""
+
+
+def luchtreiniger():
+    kaarten = ''
+    for i, p in enumerate(LR):
+        rows = ''.join(f'<tr><td>{a}</td><td>{b}</td></tr>' for a, b in p["specs"])
+        kaarten += f'''<article class="lrc rv d{i}" id="{p["k"]}">
+  <img src="/img/{p["k"]}.webp" alt="{p["naam"]} met H13 HEPA-filter voor {p["ruimte"]}" loading="{"eager" if i == 0 else "lazy"}">
+  <div class="in">
+    <h2>{p["naam"]}</h2>
+    <p class="vr">{p["voor"]} · {p["ruimte"]}</p>
+    <div class="pr"><b>€{p["ex"]}</b><span>excl. btw · €{p["inc_s"]} incl. btw · excl. verzending</span></div>
+    <table>{rows}</table>
+    <div class="act"><div class="lrq" data-lrq="{p["k"]}"><button type="button" data-d="-1" aria-label="Minder">−</button><span>1</span><button type="button" data-d="1" aria-label="Meer">+</button></div><button class="btn acc" type="button" data-lr-add="{p["k"]}" data-umami-event="luchtreiniger-in-mandje-{p["k"]}">In mandje</button></div>
+  </div>
+</article>'''
+    ld = [{"@context": "https://schema.org", "@type": "Product", "name": f'{p["naam"]} H13 HEPA', "sku": p["sku"], "image": f'{URL}/img/{p["k"]}.webp',
+           "description": f'Luchtreiniger met H13 HEPA-filter en actieve kool voor {p["ruimte"]}.', "brand": {"@type": "Brand", "name": "Ceilingflow"},
+           "offers": {"@type": "Offer", "price": f'{p["inc"]:.2f}', "priceCurrency": "EUR", "availability": "https://schema.org/InStock", "url": f'{URL}/luchtreiniger/#{p["k"]}'}} for p in LR]
+    faq_ld = json.dumps({"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in LR_FAQ]}, ensure_ascii=False)
+    extra = SCHOOL_CSS + LR_CSS + f'<script type="application/ld+json">{json.dumps(ld, ensure_ascii=False)}</script><script type="application/ld+json">{faq_ld}</script>'
+    h = head('Luchtreiniger met H13 HEPA-filter voor klaslokaal en kantoor · Ceilingflow', 'Luchtreinigers met H13 HEPA en actieve kool. Groot voor 42 tot 74 m² (CADR 600 m³/u, €296,69 excl. btw) en Klein voor 8 tot 15 m² (€109,09 excl. btw). Direct te bestellen.', '/luchtreiniger/', extra)
+    body = nav(False) + f'''
+<main>
+<section class="sh"><div class="wrap">
+  <div class="crumb rv"><a href="/">Home</a> / Luchtreiniger</div>
+  <span class="eyebrow rv">Schone lucht</span>
+  <h1 class="h2 rv d1" style="margin:20px 0 24px">Ceilingflow verplaatst de lucht.<br>Deze luchtreinigers <em>filteren</em> hem.</h1>
+  <p class="lead rv d2">H13 HEPA met actieve kool vangt fijnstof, pollen, huisstof, schimmelsporen en geuren. Voor klaslokalen, groepsruimtes, spreekkamers en kantoren. Uit Nederlandse voorraad, samen met je Ceilingflow af te rekenen.</p>
+  <div class="lrg">{kaarten}</div>
+</div></section>
+
+<section class="sec2" style="padding-top:0"><div class="wrap eerlijk rv">
+  <div><span class="eyebrow">Eerlijk is eerlijk</span><h2 class="h2" style="margin-top:20px;font-size:clamp(34px,4.4vw,60px)">Wat een luchtreiniger <em>niet</em> doet.</h2></div>
+  <div><p>Een luchtreiniger voert geen buitenlucht aan en verlaagt CO2 niet. Ventileren blijft dus nodig. Wat hij wel doet: deeltjes en geurstoffen uit de lucht in de ruimte filteren, ook als de ramen dicht moeten blijven.</p><p>Het filter vervang je als de filtermelding (Groot) aangeeft dat het vol is.</p></div>
+</div></section>
+
+{offerte('Meerdere ruimtes schone lucht?')}
+{faq_block(LR_FAQ)}
+</main>
+''' + footer() + '''<script>
+document.querySelectorAll('[data-lrq]').forEach(q => q.addEventListener('click', e => {{ const b = e.target.closest('[data-d]'); if (!b) return; const s = q.querySelector('span'); s.textContent = Math.max(1, Math.min(99, +s.textContent + +b.dataset.d)); }}));
+document.querySelectorAll('[data-lr-add]').forEach(b => b.addEventListener('click', () => {{ const k = b.dataset.lrAdd; const q = +document.querySelector('[data-lrq="' + k + '"] span').textContent || 1; window.CF && CF.add(k, q); }}));
+</script>
+</body>
+</html>
+'''
+    return h + body
+
+
 def simple(title, path, h1, text):
     return head(title, text, path, '<meta name="robots" content="noindex">') + nav(False) + f'''
 <main class="wrap" style="padding:clamp(90px,14vw,180px) 0;min-height:60vh">
@@ -767,6 +850,8 @@ def main():
     (ROOT / 'kinderopvang/index.html').write_text(kinderopvang())
     (ROOT / 'winter').mkdir(exist_ok=True)
     (ROOT / 'winter/index.html').write_text(winter())
+    (ROOT / 'luchtreiniger').mkdir(exist_ok=True)
+    (ROOT / 'luchtreiniger/index.html').write_text(luchtreiniger())
     (ROOT / 'bedankt').mkdir(exist_ok=True)
     (ROOT / 'bedankt/index.html').write_text(simple('Bedankt · Ceilingflow', '/bedankt/', 'Bedankt voor je <em>aanvraag</em>.', 'We hebben je offerteaanvraag ontvangen en reageren binnen één werkdag.'))
     (ROOT / '404.html').write_text(simple('Pagina niet gevonden · Ceilingflow', '/404.html', 'Deze pagina <em>bestaat niet</em>.', 'De pagina die je zoekt is verplaatst of bestaat niet meer.'))
@@ -777,6 +862,7 @@ def main():
   <url><loc>{URL}/scholen/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>{URL}/kinderopvang/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>{URL}/winter/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>{URL}/luchtreiniger/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
 </urlset>
 ''')
     (ROOT / 'robots.txt').write_text(f'User-agent: *\nAllow: /\nDisallow: /bedankt/\n\nSitemap: {URL}/sitemap.xml\n')
