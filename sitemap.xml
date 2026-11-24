@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://ceilingflow.nl/</loc><changefreq>weekly</changefreq><priority>1.0</priority></url>
-  <url><loc>https://ceilingflow.nl/ventilator/</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
-  <url><loc>https://ceilingflow.nl/scholen/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://ceilingflow.nl/kinderopvang/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://ceilingflow.nl/kantoor/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://ceilingflow.nl/winter/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://ceilingflow.nl/luchtreiniger/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ceilingflow.nl/</loc><lastmod>2026-11-24</lastmod></url>
+  <url><loc>https://ceilingflow.nl/ventilator/</loc><lastmod>2026-11-24</lastmod></url>
+  <url><loc>https://ceilingflow.nl/scholen/</loc><lastmod>2026-11-24</lastmod></url>
+  <url><loc>https://ceilingflow.nl/kinderopvang/</loc><lastmod>2026-11-24</lastmod></url>
+  <url><loc>https://ceilingflow.nl/kantoor/</loc><lastmod>2026-11-24</lastmod></url>
+  <url><loc>https://ceilingflow.nl/winter/</loc><lastmod>2026-11-24</lastmod></url>
+  <url><loc>https://ceilingflow.nl/luchtreiniger/</loc><lastmod>2026-11-24</lastmod></url>
+  <url><loc>https://ceilingflow.nl/contact/</loc><lastmod>2026-11-24</lastmod></url>
+  <url><loc>https://ceilingflow.nl/privacy/</loc><lastmod>2026-11-24</lastmod></url>
 </urlset>

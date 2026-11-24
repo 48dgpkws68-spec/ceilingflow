@@ -1,11 +1,18 @@
 #!/usr/bin/env python3
 """Bouwt de statische Ceilingflow-site: index, /ventilator/, /bedankt/, 404, sitemap en robots."""
-import json, pathlib
+import json, pathlib, hashlib
+from datetime import date
 
 ROOT = pathlib.Path(__file__).parent
 URL = 'https://ceilingflow.nl'
 PHONE = '+31 6 34 33 38 09'
 MAIL = 'nick@gnc-systems.com'
+INDEXNOW_KEY = '80b241ecbc03c31a2ef300d09e441a73'
+LASTMOD = ROOT / '.lastmod.json'  # pad -> hash + datum; lastmod verspringt alleen als een pagina echt verandert (Jekyll serveert dotfiles niet)
+ORG = {"@type": "Organization", "@id": "https://ceilingflow.nl/#org", "name": "Ceilingflow", "url": "https://ceilingflow.nl/", "logo": "https://ceilingflow.nl/img/logo.png",
+       "email": "nick@gnc-systems.com", "telephone": "+31634333809", "sameAs": ["https://www.linkedin.com/company/ceilingflow/"],
+       "contactPoint": {"@type": "ContactPoint", "contactType": "sales", "telephone": "+31634333809", "email": "nick@gnc-systems.com", "availableLanguage": "nl"}}
+WEBSITE = {"@type": "WebSite", "@id": "https://ceilingflow.nl/#website", "name": "Ceilingflow", "url": "https://ceilingflow.nl/", "inLanguage": "nl", "publisher": {"@id": "https://ceilingflow.nl/#org"}}
 FONTS = '<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet">'
 ICON = '<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 64 64%22%3E%3Crect width=%2264%22 height=%2264%22 rx=%2214%22 fill=%22%230d0f10%22/%3E%3Ccircle cx=%2232%22 cy=%2232%22 r=%2218%22 fill=%22none%22 stroke=%22%23ff5a1f%22 stroke-width=%225%22/%3E%3Ccircle cx=%2232%22 cy=%2232%22 r=%225%22 fill=%22%23eef0ee%22/%3E%3C/svg%3E">'
 LOGO = '<svg viewBox="0 0 32 32" aria-hidden="true"><rect x="1.5" y="1.5" width="29" height="29" rx="7" fill="none" stroke="currentColor" stroke-width="2.4"/><circle cx="16" cy="16" r="8.5" fill="none" stroke="#ff5a1f" stroke-width="2.6"/><circle cx="16" cy="16" r="2.6" fill="currentColor"/></svg>'
@@ -117,7 +124,7 @@ def footer():
   <div><a class="logo" href="/" style="color:var(--ink)">{LOGO}<span>Ceiling<i>flow</i></span></a><p style="margin-top:14px;max-width:26em">Ventilatie voor 60×60 systeemplafonds. Voor kantoren, scholen, kinderopvang en zorginstellingen.</p></div>
   <div><h4>Product</h4><ul><li><a href="/ventilator/">Ceilingflow Ventilatie Unit</a></li><li><a href="/ventilator/#specs">Specificaties</a></li><li><a href="/#installatie">Installatie</a></li><li><a href="/scholen/">Voor scholen</a></li><li><a href="/kinderopvang/">Voor kinderopvang</a></li><li><a href="/kantoor/">Voor kantoren en praktijken</a></li><li><a href="/winter/">Plafondventilator in de winter</a></li><li><a href="/luchtreiniger/">Luchtreiniger H13 HEPA</a></li></ul></div>
   <div><h4>Zakelijk</h4><ul><li><a href="/#offerte">Offerte aanvragen</a></li><li>Btw-factuur</li><li>Bulkbestellingen</li></ul></div>
-  <div><h4>Contact</h4><ul><li><a href="mailto:{MAIL}">{MAIL}</a></li><li><a href="tel:+31634333809">{PHONE}</a></li></ul></div>
+  <div><h4>Contact</h4><ul><li><a href="/contact/">Contact</a></li><li><a href="mailto:{MAIL}">{MAIL}</a></li><li><a href="tel:+31634333809">{PHONE}</a></li><li><a href="/privacy/">Privacyverklaring</a></li></ul></div>
   <div class="big" aria-hidden="true">Ceilingflow</div>
   <p style="grid-column:1/-1;font-size:13px">© 2026 Ceilingflow.nl · Alle rechten voorbehouden</p>
 </div></footer>
@@ -234,8 +241,8 @@ def index():
     sectors = ''.join(f'<span>{s}</span>' for s in ["Scholen", "Kinderopvang", "Zorg", "Kantoren", "Vergaderruimtes", "Praktijkruimtes", "Showrooms"] * 2)
     faq_ld = json.dumps({"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in FAQ]}, ensure_ascii=False)
     extra = INDEX_CSS + f'<script type="application/ld+json">{product_ld()}</script><script type="application/ld+json">{faq_ld}</script>'
-    extra += '<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"Ceilingflow","url":"https://ceilingflow.nl/","email":"' + MAIL + '","telephone":"' + PHONE + '"}</script>'
-    h = head('Ceilingflow · Plafondventilator voor 60x60 systeemplafond', 'Ceilingflow is de stille plafondventilator voor 60x60 systeemplafonds in scholen, kinderopvang, zorg en kantoren. €299 excl. btw, in Wit en Zwart, installatie in minder dan 5 minuten.', '/', extra)
+    extra += '<script type="application/ld+json">' + json.dumps({"@context": "https://schema.org", "@graph": [ORG, WEBSITE]}, ensure_ascii=False) + '</script>'
+    h = head('Plafondventilator voor 60x60 systeemplafond · Ceilingflow', 'Stille plafondventilator voor 60x60 systeemplafonds in scholen, kinderopvang, zorg en kantoren. €299 excl. btw, Wit of Zwart, in minder dan 5 minuten geplaatst.', '/', extra)
     body = nav() + f'''
 <main>
 <section class="hero"><div class="wrap">
@@ -400,6 +407,42 @@ PDP_CSS = '''<style>
 </style>'''
 
 
+LAMP_FAQ = [
+    ("Kan Ceilingflow naast een LED-paneel hangen?", "Ja. Ceilingflow en LED-panelen hebben allebei het 60×60 formaat en passen in hetzelfde plafondrooster. Je vervangt een gewone plafondplaat door Ceilingflow en de verlichting blijft zoals hij is."),
+    ("Verkopen jullie ook plafondventilatoren met lamp?", "Nee. Wij verkopen Ceilingflow voor het 60×60 systeemplafond en luchtreinigers. Voor een plafondventilator met lamp in de woonkamer of slaapkamer kun je beter bij een verlichtingswinkel terecht."),
+]
+LAMP_ROWS = [
+    ("Verlichting", "Geen lamp. Je bestaande LED-panelen of armaturen blijven in het plafond zitten.", "Een lamp of LED-module zit in de ventilator zelf."),
+    ("Plafond", "60×60 systeemplafond: de unit vervangt één plafondplaat.", "Een gewoon plafond met een lichtpunt of plafondhaak."),
+    ("Aansluiting", "Stekker in een stopcontact boven het plafond, in minder dan 5 minuten geplaatst.", "Aangesloten op het lichtpunt in het plafond."),
+    ("Bediening", "Afstandsbediening voor snelheid, richting en timer.", "Wandschakelaar, trekkoord of afstandsbediening, verschilt per model."),
+    ("Bedoeld voor", "Klaslokalen, kinderopvang, kantoren en praktijkruimtes.", "Woonkamer, slaapkamer en andere ruimtes thuis."),
+]
+LAMP_CSS = """<style>
+.lamp{padding:0 0 clamp(80px,12vw,150px)}
+.lamp .lead{margin-top:22px;max-width:44em}
+.lamp-t{margin-top:40px;border-radius:var(--r);background:var(--card);box-shadow:inset 0 0 0 1px var(--line);overflow-x:auto}
+.lamp-t table{width:100%;border-collapse:collapse;min-width:620px;font-size:15px}
+.lamp-t th,.lamp-t td{padding:16px 20px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line)}
+.lamp-t tr:last-child td{border-bottom:0}
+.lamp-t th{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--soft);font-weight:600}
+.lamp-t td:first-child{font-weight:600;white-space:nowrap}
+.lamp-t td{color:var(--soft)}
+.lamp-t td:nth-child(2){color:var(--ink)}
+</style>"""
+
+
+def lamp_html():
+    """Zoekgat 'plafondventilator met lamp' (seo-gap 24 nov 2026): eerlijk antwoord, Ceilingflow heeft geen lamp."""
+    rows = ''.join(f'<tr><td>{a}</td><td>{b}</td><td>{c}</td></tr>' for a, b, c in LAMP_ROWS)
+    return f'''<section class="lamp" id="met-lamp"><div class="wrap">
+  <span class="eyebrow rv">Met of zonder lamp</span>
+  <h2 class="h2 rv d1" style="margin-top:20px;font-size:clamp(38px,5vw,72px)">Plafondventilator<br><em>met lamp?</em></h2>
+  <p class="lead rv">Ceilingflow heeft geen lamp. De unit vervangt één plaat van 60×60 cm in het systeemplafond, zodat de LED-panelen of armaturen die er al hangen gewoon blijven zitten. Licht en luchtcirculatie blijven zo twee aparte toestellen. Zoek je een ventilator met lamp voor thuis, dan past een klassieke plafondventilator met schoepen en verlichting beter. Die verkopen wij niet.</p>
+  <div class="lamp-t rv"><table><thead><tr><th></th><th>Ceilingflow</th><th>Plafondventilator met lamp</th></tr></thead><tbody>{rows}</tbody></table></div>
+</div></section>'''
+
+
 def pdp():
     specs = ''.join(f'<dt>{a}</dt><dd>{b}</dd>' for a, b in SPECS)
     feats = [("Plug &amp; play", "Plafondtegel eruit, Ceilingflow erin, stekker in het stopcontact. Klaar."),
@@ -409,9 +452,9 @@ def pdp():
              ("Energiezuinig", "Borstelloze motor, recyclebaar ABS, RoHS- en CE-gecertificeerd."),
              ("Het hele jaar door", "Koeling in de zomer, betere warmteverdeling in de winter. Eén unit, twee functies.")]
     feats_html = ''.join(f'<article class="rv d{i % 3}"><h3>{a}</h3><p>{b}</p></article>' for i, (a, b) in enumerate(feats))
-    pdp_faq = [FAQ[i] for i in (0, 1, 5, 6, 9, 10, 11, 12)]
+    pdp_faq = [FAQ[i] for i in (0, 1, 5, 6, 9, 10, 11, 12)] + LAMP_FAQ
     faq_ld = json.dumps({"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in pdp_faq]}, ensure_ascii=False)
-    extra = PDP_CSS + f'<script type="application/ld+json">{product_ld()}</script><script type="application/ld+json">{faq_ld}</script>'
+    extra = PDP_CSS + LAMP_CSS + f'<script type="application/ld+json">{product_ld()}</script><script type="application/ld+json">{faq_ld}</script>'
     extra += '<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://ceilingflow.nl/"},{"@type":"ListItem","position":2,"name":"Ceilingflow Ventilatie Unit","item":"https://ceilingflow.nl/ventilator/"}]}</script>'
     h = head('Ceilingflow Ventilatie Unit · €299 excl. btw · Wit of Zwart', 'Bestel de Ceilingflow plafondventilator voor 60x60 systeemplafonds. €299 excl. btw (€361,79 incl.), Wit of Zwart, onder 35 dB, afstandsbediening inbegrepen.', '/ventilator/', extra)
     body = nav(False) + f'''
@@ -458,6 +501,8 @@ def pdp():
   <h2 class="h2 rv d1" style="margin-top:20px">Een aangenaam<br>binnenklimaat, <em>elk seizoen</em>.</h2>
   <div class="feat">{feats_html}</div>
 </div></section>
+
+{lamp_html()}
 
 <section><div class="wrap about">
   <img class="rv" src="/img/kantoor.webp" alt="Ceilingflow in het systeemplafond van een kantoor" loading="lazy">
@@ -562,7 +607,7 @@ def scholen():
     faq_ld = json.dumps({"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in SCHOOL_FAQ]}, ensure_ascii=False)
     extra = SCHOOL_CSS + f'<script type="application/ld+json">{faq_ld}</script>'
     extra += '<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://ceilingflow.nl/"},{"@type":"ListItem","position":2,"name":"Scholen en kinderopvang","item":"https://ceilingflow.nl/scholen/"}]}</script>'
-    h = head('Plafondventilator voor klaslokalen · Ceilingflow voor scholen', 'Stille plafondventilator voor het 60x60 systeemplafond in klaslokalen en kinderopvang. Onder 35 dB, niets op de vloer, installatie in 5 minuten. €299 excl. btw, offerte voor meerdere lokalen.', '/scholen/', extra)
+    h = head('Plafondventilator voor klaslokalen · Ceilingflow voor scholen', 'Stille plafondventilator voor het 60x60 systeemplafond in klaslokalen. Onder 35 dB, niets op de vloer, in 5 minuten geplaatst. €299 excl. btw, offerte per school.', '/scholen/', extra)
     body = nav(False) + f'''
 <main>
 <section class="sh"><div class="wrap">
@@ -634,7 +679,7 @@ def kinderopvang():
     faq_ld = json.dumps({"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in KDV_FAQ]}, ensure_ascii=False)
     extra = SCHOOL_CSS + f'<script type="application/ld+json">{faq_ld}</script>'
     extra += '<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://ceilingflow.nl/"},{"@type":"ListItem","position":2,"name":"Kinderopvang","item":"https://ceilingflow.nl/kinderopvang/"}]}</script>'
-    h = head('Plafondventilator voor de kinderopvang · Ceilingflow', 'Stille plafondventilator voor de groepsruimte van kinderopvang en peuteropvang. Onder 35 dB voor het slaapuurtje, buiten bereik van kinderen, niets op de vloer. €299 excl. btw per groepsruimte.', '/kinderopvang/', extra)
+    h = head('Plafondventilator voor de kinderopvang · Ceilingflow', 'Stille plafondventilator voor de groepsruimte van kinderopvang en peuteropvang. Onder 35 dB voor het slaapuurtje, buiten bereik van kinderen. €299 excl. btw.', '/kinderopvang/', extra)
     body = nav(False) + f'''
 <main>
 <section class="sh"><div class="wrap">
@@ -708,7 +753,7 @@ def kantoor():
     faq_ld = json.dumps({"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in KANTOOR_FAQ]}, ensure_ascii=False)
     extra = SCHOOL_CSS + f'<script type="application/ld+json">{faq_ld}</script>'
     extra += '<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://ceilingflow.nl/"},{"@type":"ListItem","position":2,"name":"Kantoren en praktijkruimtes","item":"https://ceilingflow.nl/kantoor/"}]}</script>'
-    h = head('Plafondventilator voor kantoor en spreekkamer · Ceilingflow', 'Stille plafondventilator voor het 60x60 systeemplafond in kantoren, vergaderruimtes en praktijkruimtes. 35 dB(A) tijdens vergaderen, 0,33 kWh per werkdag, geen kabels op de vloer. €299 excl. btw per ruimte.', '/kantoor/', extra)
+    h = head('Plafondventilator voor kantoor en spreekkamer · Ceilingflow', 'Stille plafondventilator voor 60x60 systeemplafonds in kantoren en praktijkruimtes. 35 dB(A) tijdens vergaderen, 0,33 kWh per werkdag. €299 excl. btw per ruimte.', '/kantoor/', extra)
     body = nav(False) + f'''
 <main>
 <section class="sh"><div class="wrap">
@@ -780,7 +825,7 @@ def winter():
     faq_ld = json.dumps({"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in WINTER_FAQ]}, ensure_ascii=False)
     extra = SCHOOL_CSS + f'<script type="application/ld+json">{faq_ld}</script>'
     extra += '<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://ceilingflow.nl/"},{"@type":"ListItem","position":2,"name":"Plafondventilator in de winter","item":"https://ceilingflow.nl/winter/"}]}</script>'
-    h = head('Plafondventilator in de winter · warme lucht terug naar beneden · Ceilingflow', 'Warme lucht blijft onder het plafond hangen. Een plafondventilator op lage stand brengt die terug naar beneden. Ceilingflow past in het 60x60 systeemplafond, onder 35 dB, €299 excl. btw.', '/winter/', extra)
+    h = head('Plafondventilator in de winter · warmte omlaag · Ceilingflow', 'Warme lucht blijft onder het plafond hangen. Een plafondventilator op lage stand brengt die terug naar beneden. Ceilingflow voor 60x60 plafonds, €299 excl. btw.', '/winter/', extra)
     body = nav(False) + f'''
 <main>
 <section class="sh"><div class="wrap">
@@ -875,7 +920,7 @@ def luchtreiniger():
            "offers": {"@type": "Offer", "price": f'{p["inc"]:.2f}', "priceCurrency": "EUR", "availability": "https://schema.org/InStock", "url": f'{URL}/luchtreiniger/#{p["k"]}'}} for p in LR]
     faq_ld = json.dumps({"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in LR_FAQ]}, ensure_ascii=False)
     extra = SCHOOL_CSS + LR_CSS + f'<script type="application/ld+json">{json.dumps(ld, ensure_ascii=False)}</script><script type="application/ld+json">{faq_ld}</script>'
-    h = head('Luchtreiniger met H13 HEPA-filter voor klaslokaal en kantoor · Ceilingflow', 'Luchtreinigers met H13 HEPA en actieve kool. Groot voor 42 tot 74 m² (CADR 600 m³/u, €296,69 excl. btw) en Klein voor 8 tot 15 m² (€109,09 excl. btw). Direct te bestellen.', '/luchtreiniger/', extra)
+    h = head('Luchtreiniger H13 HEPA voor klas en kantoor · Ceilingflow', 'Luchtreinigers met H13 HEPA en actieve kool. Groot voor 42 tot 74 m² (CADR 600 m³/u, €296,69 excl. btw), Klein voor 8 tot 15 m² (€109,09 excl. btw).', '/luchtreiniger/', extra)
     body = nav(False) + f'''
 <main>
 <section class="sh"><div class="wrap">
@@ -904,6 +949,71 @@ document.querySelectorAll('[data-lr-add]').forEach(b => b.addEventListener('clic
     return h + body
 
 
+PROSE_CSS = """<style>
+.prose{max-width:46em;padding:clamp(60px,10vw,120px) 0}
+.prose h1{margin:20px 0 24px}
+.prose h2{font-size:clamp(22px,2.4vw,30px);letter-spacing:-.03em;margin:44px 0 12px}
+.prose p,.prose li{color:var(--soft);font-size:17px;line-height:1.55;margin-top:12px}
+.prose ul{padding-left:1.2em}
+.prose a{text-decoration:underline;text-underline-offset:3px}
+.prose .cards{display:grid;gap:12px;margin-top:30px}
+@media(min-width:700px){.prose .cards{grid-template-columns:1fr 1fr}}
+.prose .cards div{padding:22px;border-radius:var(--r);background:var(--card);box-shadow:inset 0 0 0 1px var(--line)}
+.prose .cards b{display:block;font-size:18px;color:var(--ink);margin-bottom:6px}
+</style>"""
+
+
+def crumb_ld(name, path):
+    return '<script type="application/ld+json">' + json.dumps({"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
+        {"@type": "ListItem", "position": 1, "name": "Home", "item": URL + "/"}, {"@type": "ListItem", "position": 2, "name": name, "item": URL + path}]}, ensure_ascii=False) + '</script>'
+
+
+def contact():
+    h = head('Contact en offerte · Ceilingflow', 'Contact met Ceilingflow: bel +31 6 34 33 38 09, mail nick@gnc-systems.com of vraag een offerte aan voor meerdere lokalen. Reactie binnen 1 werkdag.', '/contact/', PROSE_CSS + crumb_ld('Contact', '/contact/'))
+    return h + nav(False) + f'''
+<main class="wrap"><div class="prose">
+  <span class="eyebrow">Contact</span>
+  <h1 class="h2">Vragen of een <em>offerte?</em></h1>
+  <p class="lead">Bel, mail of vul het offerteformulier in. Je krijgt binnen 1 werkdag persoonlijk antwoord.</p>
+  <div class="cards">
+    <div><b>Bellen</b><a href="tel:+31634333809">{PHONE}</a></div>
+    <div><b>Mailen</b><a href="mailto:{MAIL}">{MAIL}</a></div>
+    <div><b>Direct bestellen</b><a href="/ventilator/">Ceilingflow Wit of Zwart</a>, of een <a href="/luchtreiniger/">luchtreiniger</a></div>
+    <div><b>Retour of levering</b>Vragen over je bestelling of een retour? Bel of mail ons, dan kijken we samen naar je situatie.</div>
+  </div>
+</div></main>
+{offerte('Offerte voor meerdere ruimtes')}
+''' + footer() + '</body>\n</html>\n'
+
+
+def privacy():
+    h = head('Privacyverklaring · Ceilingflow', 'Welke gegevens Ceilingflow.nl verwerkt bij het offerteformulier en bij bestellen, welke diensten we gebruiken en welke rechten je hebt. Geen trackingcookies.', '/privacy/', PROSE_CSS + crumb_ld('Privacyverklaring', '/privacy/'))
+    return h + nav(False) + f'''
+<main class="wrap"><div class="prose">
+  <span class="eyebrow">Privacy</span>
+  <h1 class="h2">Privacy<em>verklaring</em></h1>
+  <p class="lead">Ceilingflow.nl verkoopt de Ceilingflow plafondventilator en luchtreinigers aan scholen, kinderopvang, zorg en bedrijven. Hier lees je welke gegevens we daarbij verwerken en waarom.</p>
+  <h2>Offerteformulier</h2>
+  <p>Vraag je een offerte aan, dan ontvangen we je naam, organisatie, e-mailadres, telefoonnummer, het aantal units, de kleur, het type locatie en je bericht. We gebruiken die gegevens alleen om je een offerte te sturen en contact met je op te nemen. Het formulier wordt verstuurd via FormSubmit (formsubmit.co), een externe dienst die je aanvraag als e-mail naar ons doorstuurt en je een bevestiging mailt.</p>
+  <h2>Bestellen en betalen</h2>
+  <p>Je winkelmandje staat alleen in je eigen browser tot je gaat afrekenen. Afrekenen gebeurt in een beveiligde Shopify-checkout van onze webwinkel Pegasus Depot. Daar vul je je naam, adres, e-mailadres en betaalgegevens in. Shopify en de betaaldienst die je kiest verwerken die gegevens om je bestelling en betaling af te handelen. Wij gebruiken je gegevens om de bestelling te leveren, de factuur te maken en je de leverdatum te mailen.</p>
+  <h2>Bezoekersstatistieken en cookies</h2>
+  <p>We tellen bezoeken met Umami op een eigen server. Dat gebeurt zonder cookies en zonder dat we zien wie je bent: we zien alleen hoeveel bezoekers welke pagina bekijken. Ceilingflow.nl plaatst geen tracking- of advertentiecookies. In je browser bewaren we alleen je kleurkeuze en je winkelmandje (localStorage). Die gegevens gaan pas naar de checkout als je afrekent.</p>
+  <h2>Andere diensten</h2>
+  <ul>
+    <li>De lettertypen komen van Google Fonts. Je browser haalt ze op bij Google, dat daarbij je IP-adres ziet.</li>
+    <li>De website staat op GitHub Pages. GitHub verwerkt technische gegevens zoals je IP-adres om de site veilig te leveren.</li>
+    <li>Links naar bol.com en LinkedIn brengen je naar die websites. Daar geldt hun eigen privacybeleid.</li>
+  </ul>
+  <h2>Bewaren</h2>
+  <p>Offerteaanvragen bewaren we zolang dat nodig is voor de offerte en de opvolging daarvan. Bestel- en factuurgegevens bewaren we zeven jaar, omdat de wet dat voorschrijft. We verkopen je gegevens niet en delen ze alleen met de diensten hierboven.</p>
+  <h2>Jouw rechten</h2>
+  <p>Je mag je gegevens inzien, laten verbeteren of laten verwijderen. Ook kun je bezwaar maken tegen het gebruik ervan. Mail daarvoor naar <a href="mailto:{MAIL}">{MAIL}</a> of bel {PHONE}. Ben je het niet eens met hoe we met je gegevens omgaan, dan kun je een klacht indienen bij de Autoriteit Persoonsgegevens.</p>
+  <p style="margin-top:30px;font-size:14px">Laatst bijgewerkt: 24 november 2026.</p>
+</div></main>
+''' + footer() + '</body>\n</html>\n'
+
+
 def simple(title, path, h1, text):
     return head(title, text, path, '<meta name="robots" content="noindex">') + nav(False) + f'''
 <main class="wrap" style="padding:clamp(90px,14vw,180px) 0;min-height:60vh">
@@ -916,33 +1026,32 @@ def simple(title, path, h1, text):
 
 
 def main():
-    (ROOT / 'index.html').write_text(index())
-    (ROOT / 'ventilator').mkdir(exist_ok=True)
-    (ROOT / 'ventilator/index.html').write_text(pdp())
-    (ROOT / 'scholen').mkdir(exist_ok=True)
-    (ROOT / 'scholen/index.html').write_text(scholen())
-    (ROOT / 'kinderopvang').mkdir(exist_ok=True)
-    (ROOT / 'kinderopvang/index.html').write_text(kinderopvang())
-    (ROOT / 'kantoor').mkdir(exist_ok=True)
-    (ROOT / 'kantoor/index.html').write_text(kantoor())
-    (ROOT / 'winter').mkdir(exist_ok=True)
-    (ROOT / 'winter/index.html').write_text(winter())
-    (ROOT / 'luchtreiniger').mkdir(exist_ok=True)
-    (ROOT / 'luchtreiniger/index.html').write_text(luchtreiniger())
+    pages = {'/': index(), '/ventilator/': pdp(), '/scholen/': scholen(), '/kinderopvang/': kinderopvang(), '/kantoor/': kantoor(),
+             '/winter/': winter(), '/luchtreiniger/': luchtreiniger(), '/contact/': contact(), '/privacy/': privacy()}
+    for p, html_ in pages.items():
+        d = ROOT / p.strip('/') if p != '/' else ROOT
+        d.mkdir(exist_ok=True)
+        (d / 'index.html').write_text(html_)
+    oud = json.loads(LASTMOD.read_text()) if LASTMOD.exists() else {}
+    lm = {}
+    for p, html_ in pages.items():
+        hs = hashlib.sha1(html_.encode()).hexdigest()
+        lm[p] = {'h': hs, 'd': oud[p]['d'] if p in oud and oud[p].get('h') == hs else date.today().isoformat()}
+    LASTMOD.write_text(json.dumps(lm, indent=0))
+    (ROOT / f'{INDEXNOW_KEY}.txt').write_text(INDEXNOW_KEY)
+    logo = ROOT / 'img' / 'logo.png'
+    if not logo.exists():  # beeldmerk uit het favicon als PNG voor Organization.logo
+        from PIL import Image, ImageDraw
+        s = 8; im = Image.new('RGBA', (64 * s, 64 * s), (0, 0, 0, 0)); dr = ImageDraw.Draw(im)
+        dr.rounded_rectangle((0, 0, 64 * s - 1, 64 * s - 1), radius=14 * s, fill='#0d0f10')
+        dr.ellipse(((32 - 18) * s, (32 - 18) * s, (32 + 18) * s, (32 + 18) * s), outline='#ff5a1f', width=5 * s)
+        dr.ellipse(((32 - 5) * s, (32 - 5) * s, (32 + 5) * s, (32 + 5) * s), fill='#eef0ee')
+        im.save(logo, 'PNG', optimize=True)
     (ROOT / 'bedankt').mkdir(exist_ok=True)
     (ROOT / 'bedankt/index.html').write_text(simple('Bedankt · Ceilingflow', '/bedankt/', 'Bedankt voor je <em>aanvraag</em>.', 'We hebben je offerteaanvraag ontvangen en reageren binnen één werkdag.'))
     (ROOT / '404.html').write_text(simple('Pagina niet gevonden · Ceilingflow', '/404.html', 'Deze pagina <em>bestaat niet</em>.', 'De pagina die je zoekt is verplaatst of bestaat niet meer.'))
-    (ROOT / 'sitemap.xml').write_text(f'''<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>{URL}/</loc><changefreq>weekly</changefreq><priority>1.0</priority></url>
-  <url><loc>{URL}/ventilator/</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
-  <url><loc>{URL}/scholen/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>{URL}/kinderopvang/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>{URL}/kantoor/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>{URL}/winter/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>{URL}/luchtreiniger/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-</urlset>
-''')
+    (ROOT / 'sitemap.xml').write_text('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+                                      + ''.join(f'  <url><loc>{URL}{p}</loc><lastmod>{lm[p]["d"]}</lastmod></url>\n' for p in pages) + '</urlset>\n')
     (ROOT / 'robots.txt').write_text(f'User-agent: *\nAllow: /\nDisallow: /bedankt/\n\nSitemap: {URL}/sitemap.xml\n')
     (ROOT / 'CNAME').write_text('ceilingflow.nl\n')
     print('klaar')
