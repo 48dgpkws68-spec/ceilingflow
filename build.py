@@ -115,7 +115,7 @@ def faq_block(items):
 def footer():
     return f'''<footer><div class="wrap">
   <div><a class="logo" href="/" style="color:var(--ink)">{LOGO}<span>Ceiling<i>flow</i></span></a><p style="margin-top:14px;max-width:26em">Ventilatie voor 60×60 systeemplafonds. Voor kantoren, scholen, kinderopvang en zorginstellingen.</p></div>
-  <div><h4>Product</h4><ul><li><a href="/ventilator/">Ceilingflow Ventilatie Unit</a></li><li><a href="/ventilator/#specs">Specificaties</a></li><li><a href="/#installatie">Installatie</a></li><li><a href="/scholen/">Voor scholen</a></li><li><a href="/kinderopvang/">Voor kinderopvang</a></li><li><a href="/winter/">Plafondventilator in de winter</a></li><li><a href="/luchtreiniger/">Luchtreiniger H13 HEPA</a></li></ul></div>
+  <div><h4>Product</h4><ul><li><a href="/ventilator/">Ceilingflow Ventilatie Unit</a></li><li><a href="/ventilator/#specs">Specificaties</a></li><li><a href="/#installatie">Installatie</a></li><li><a href="/scholen/">Voor scholen</a></li><li><a href="/kinderopvang/">Voor kinderopvang</a></li><li><a href="/kantoor/">Voor kantoren en praktijken</a></li><li><a href="/winter/">Plafondventilator in de winter</a></li><li><a href="/luchtreiniger/">Luchtreiniger H13 HEPA</a></li></ul></div>
   <div><h4>Zakelijk</h4><ul><li><a href="/#offerte">Offerte aanvragen</a></li><li>Btw-factuur</li><li>Bulkbestellingen</li></ul></div>
   <div><h4>Contact</h4><ul><li><a href="mailto:{MAIL}">{MAIL}</a></li><li><a href="tel:+31634333809">{PHONE}</a></li></ul></div>
   <div class="big" aria-hidden="true">Ceilingflow</div>
@@ -244,7 +244,7 @@ def index():
     <h1 class="rv d1">Frisse lucht.<br>Uit het <em>plafond</em>.</h1>
     <p class="lead rv d2">Ceilingflow past strak in je 60×60 systeemplafond. Voor scholen, kinderopvang, zorg en kantoren. Geen losse ventilatoren, geen kabels op de vloer.</p>
     <div class="row rv d3">{kleur_toggle()}<a class="btn acc" href="/ventilator/">Bekijk de ventilator</a><a class="btn ghost" href="#offerte">Offerte voor meerdere lokalen</a></div>
-    <p class="rv d3" style="margin-top:14px;font-size:.95rem"><a href="/scholen/#per-lokaal" data-umami-event="home-naar-scholen" style="text-decoration:underline">Voor scholen: prijs per lokaal</a> · <a href="/kinderopvang/#per-groep" data-umami-event="home-naar-kdv" style="text-decoration:underline">Voor kinderopvang: prijs per groep</a></p>
+    <p class="rv d3" style="margin-top:14px;font-size:.95rem"><a href="/scholen/#per-lokaal" data-umami-event="home-naar-scholen" style="text-decoration:underline">Voor scholen: prijs per lokaal</a> · <a href="/kinderopvang/#per-groep" data-umami-event="home-naar-kdv" style="text-decoration:underline">Voor kinderopvang: prijs per groep</a> · <a href="/kantoor/#per-ruimte" data-umami-event="home-naar-kantoor" style="text-decoration:underline">Voor kantoren: prijs per ruimte</a></p>
   </div>
   <div class="stage rv" id="stage">
     <div class="grid"></div>
@@ -294,7 +294,7 @@ def index():
   <span class="eyebrow rv">Toepassingen</span>
   <h2 class="h2 rv d1" style="margin-top:20px">Werkt overal waar<br>een <em>systeemplafond</em> hangt.</h2>
   <div class="apps">{apps_html}</div>
-  <p class="rv" style="margin-top:28px;display:flex;gap:12px;flex-wrap:wrap"><a class="btn ghost" href="/scholen/">Ceilingflow voor scholen</a><a class="btn ghost" href="/kinderopvang/">Ceilingflow voor kinderopvang</a><a class="btn ghost" href="/winter/">Plafondventilator in de winter</a></p>
+  <p class="rv" style="margin-top:28px;display:flex;gap:12px;flex-wrap:wrap"><a class="btn ghost" href="/scholen/">Ceilingflow voor scholen</a><a class="btn ghost" href="/kinderopvang/">Ceilingflow voor kinderopvang</a><a class="btn ghost" href="/kantoor/">Ceilingflow voor kantoren</a><a class="btn ghost" href="/winter/">Plafondventilator in de winter</a></p>
 </div></section>
 
 <section class="sec" id="product" style="padding-top:0"><div class="wrap">
@@ -685,6 +685,81 @@ def kinderopvang():
 ''' + footer() + '</body>\n</html>\n'
     return h + body
 
+KANTOOR_FAQ = [
+    ("Is Ceilingflow stil genoeg voor een vergadering of een belafspraak?", "Op de laagste stand werkt Ceilingflow op 35 dB(A), vergelijkbaar met een zachte fluisterstem. Dat is stil genoeg tijdens vergaderen, bellen en videogesprekken. Op de hoogste stand is het 47 dB(A), bedoeld voor warme middagen."),
+    ("Wat kost Ceilingflow per werkdag aan stroom?", "Op de hoogste stand gebruikt hij 41 W, op de laagste 27 W. Een werkdag van 8 uur op de hoogste stand is ongeveer 0,33 kWh. Vermenigvuldig dat met je eigen stroomtarief voor de kosten per ruimte per dag."),
+    ("Hoeveel units heb ik nodig voor een open kantoor?", "Dat hangt af van de indeling, de plafondhoogte en waar de werkplekken staan. Voor een spreekkamer of losse werkkamer is één unit genoeg. Voor een open kantoor of een hele verdieping rekenen we het per ruimte voor je uit in een offerte, binnen één werkdag."),
+    ("Ververst Ceilingflow de lucht in het kantoor?", "Nee. Ceilingflow brengt de lucht in de ruimte in beweging, hij voert geen buitenlucht aan en verlaagt CO2 niet. Hij vervangt dus geen mechanische ventilatie. Wil je deeltjes uit de lucht filteren, dan past de luchtreiniger met H13 HEPA-filter ernaast."),
+    ("Heeft Ceilingflow ook zin in de winter?", "Ja. Op de laagste stand brengt hij de warme lucht die onder het plafond blijft hangen terug naar werkhoogte, zonder dat je tocht voelt. Dezelfde unit gebruik je in de zomer voor verkoeling door luchtstroom."),
+    ("Wie plaatst de unit en moet het kantoor dicht?", "Dat kan de huismeester, de facilitair medewerker of de installateur. Plafondtegel eruit, Ceilingflow in het 60×60 rooster, stekker in het stopcontact boven het plafond. Gemiddeld minder dan 5 minuten per unit, dus gewoon voor of na werktijd."),
+    ("Kunnen we op factuur en op naam van het bedrijf bestellen?", "Ja. Je ontvangt altijd een btw-factuur op naam van je bedrijf of praktijk. Voor meerdere ruimtes, verdiepingen of vestigingen vraag je een zakelijke offerte aan, je krijgt binnen één werkdag een voorstel."),
+]
+
+
+def kantoor():
+    voordelen = [("Stil tijdens vergaderen", "35 dB(A) op de laagste stand. Hij draait door tijdens een overleg, een belafspraak of een videogesprek."),
+                 ("Geen ventilator op het bureau", "Geen tafelventilator die papieren wegblaast en collega's stoort. De unit zit in het plafond."),
+                 ("Geen kabels op de vloer", "Geen snoer naar een staande ventilator, geen struikelgevaar tussen de werkplekken. De stekker zit boven het plafond."),
+                 ("Zuinig", "41 W op de hoogste stand. Een werkdag van 8 uur is ongeveer 0,33 kWh per ruimte."),
+                 ("Zomer en winter", "Verkoeling door luchtstroom op warme dagen. In het stookseizoen brengt de laagste stand de warmte van het plafond terug naar werkhoogte."),
+                 ("Klaar in 5 minuten", "Plafondtegel eruit, unit erin, stekker erin. Plaatsen kan voor of na werktijd, zonder verbouwing.")]
+    v_html = ''.join(f'<article class="rv d{i % 3}"><h3>{a}</h3><p>{b}</p></article>' for i, (a, b) in enumerate(voordelen))
+    rows = ''.join(f'<tr><td>{n} {"ruimte" if n == 1 else "ruimtes"}</td><td>€{299 * n:,}'.replace(',', '.') + f'</td><td>€{361.79 * n:,.2f}'.replace(',', 'X').replace('.', ',').replace('X', '.') + '</td></tr>' for n in (1, 4, 10, 20))
+    faq_ld = json.dumps({"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in KANTOOR_FAQ]}, ensure_ascii=False)
+    extra = SCHOOL_CSS + f'<script type="application/ld+json">{faq_ld}</script>'
+    extra += '<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://ceilingflow.nl/"},{"@type":"ListItem","position":2,"name":"Kantoren en praktijkruimtes","item":"https://ceilingflow.nl/kantoor/"}]}</script>'
+    h = head('Plafondventilator voor kantoor en spreekkamer · Ceilingflow', 'Stille plafondventilator voor het 60x60 systeemplafond in kantoren, vergaderruimtes en praktijkruimtes. 35 dB(A) tijdens vergaderen, 0,33 kWh per werkdag, geen kabels op de vloer. €299 excl. btw per ruimte.', '/kantoor/', extra)
+    body = nav(False) + f'''
+<main>
+<section class="sh"><div class="wrap">
+  <div class="crumb rv"><a href="/">Home</a> / Kantoren en praktijkruimtes</div>
+  <span class="eyebrow rv">Voor kantoren, vergaderruimtes en praktijken</span>
+  <h1 class="h2 rv d1" style="margin:20px 0 24px">Een fris kantoor.<br>Zonder ventilator op het <em>bureau</em>.</h1>
+  <p class="lead rv d2">Ceilingflow is een plafondventilator die in het standaard 60×60 systeemplafond past. Stil genoeg om door te laten draaien tijdens een vergadering, zonder kabels tussen de werkplekken en binnen 5 minuten geplaatst.</p>
+  <div class="row rv d3"><a class="btn acc" href="#offerte" data-umami-event="kantoor-offerte">Offerte voor meerdere ruimtes</a><a class="btn ghost" href="/ventilator/" data-umami-event="kantoor-direct-bestellen">Direct bestellen · €361,79 incl. btw</a></div>
+  <p class="rv d3" style="margin-top:14px;font-size:.92rem;opacity:.8">€299 excl. btw per unit · verzending NL €9,50 per bestelling · btw-factuur op naam van je bedrijf</p>
+  <p class="rv d3" style="margin-top:10px;font-size:.9rem;opacity:.85">Liever via bol.com bestellen? Ceilingflow Wit staat ook in onze eigen bol-winkel (Pegasus Depot). <a href="https://www.bol.com/nl/nl/p/pegasus-depot-ceilingflow-plafondventilator-595-x-595-mm-voor-systeemplafonds-plug-and-play-met-afstandsbediening-wit/9300000401948628/" target="_blank" rel="noopener" data-umami-event="bol-alternatief-klik" data-umami-event-plek="kantoor" style="text-decoration:underline">Bekijk op bol.com</a></p>
+  <img class="hero-img rv" src="/img/kantoor.webp" alt="Ceilingflow plafondventilator in het systeemplafond van een kantoor" fetchpriority="high">
+</div></section>
+
+<section class="sec2"><div class="wrap">
+  <span class="eyebrow rv">Waarom in het plafond</span>
+  <h2 class="h2 rv d1" style="margin-top:20px">Gemaakt voor<br>de <em>werkvloer</em>.</h2>
+  <div class="vg">{v_html}</div>
+</div></section>
+
+<section class="sec2" style="padding-top:0"><div class="wrap eerlijk rv">
+  <div><span class="eyebrow">Eerlijk is eerlijk</span><h2 class="h2" style="margin-top:20px;font-size:clamp(34px,4.4vw,60px)">Wat Ceilingflow <em>niet</em> doet.</h2></div>
+  <div><p>Ceilingflow laat de lucht in het kantoor circuleren. Hij voert geen buitenlucht aan en verlaagt CO2 niet. Hij vervangt dus geen mechanische ventilatie of het luchten via ramen.</p><p>Wat hij wel doet: een warme of benauwde werkruimte aangenamer maken, zonder losse ventilator op het bureau en zonder verbouwing. Voor een spreekkamer of werkkamer tot 15 m² past de <a href="/luchtreiniger/#lr125" data-umami-event="kantoor-naar-luchtreiniger" style="text-decoration:underline">Luchtreiniger Klein</a> (€109,09 excl. btw) ernaast, die filtert de lucht met H13 HEPA.</p></div>
+</div></section>
+
+<section class="sec2" id="per-ruimte" style="padding-top:0"><div class="wrap kost">
+  <div class="rv">
+    <span class="eyebrow">Wat kost het</span>
+    <h2 class="h2" style="margin-top:20px;font-size:clamp(34px,4.4vw,60px)">Vaste prijs per ruimte.</h2>
+    <p class="lead" style="margin-top:18px">€299 excl. btw per unit, afstandsbediening inbegrepen. Verzending per bestelling, ongeacht het aantal: Nederland €9,50, België €18,50. Wit en Zwart direct te bestellen, leverdatum per mail.</p>
+    <p class="soft">Een spreekkamer of werkkamer: één unit. Een open kantoor of een hele verdieping: we rekenen het aantal per ruimte voor je uit in een offerte.</p>
+  </div>
+  <table class="rv d1"><thead><tr><th>Aantal</th><th>Excl. btw</th><th>Incl. btw</th></tr></thead><tbody>{rows}</tbody></table>
+</div></section>
+
+<section class="sec2" style="padding-top:0"><div class="wrap">
+  <span class="eyebrow rv">Zo gaat het</span>
+  <div class="st">
+    <div class="rv"><b>1</b><p>Offerte aanvragen</p><span>Aantal ruimtes, verdiepingen of vestigingen, reactie binnen 1 werkdag.</span></div>
+    <div class="rv d1"><b>2</b><p>Levering</p><span>Wit of Zwart, met btw-factuur op naam van je bedrijf.</span></div>
+    <div class="rv d2"><b>3</b><p>Plaatsen</p><span>Voor of na werktijd. Gemiddeld 5 minuten per ruimte.</span></div>
+  </div>
+  <p class="rv" style="margin-top:28px;display:flex;gap:12px;flex-wrap:wrap"><a class="btn ghost" href="/winter/">Plafondventilator in de winter</a><a class="btn ghost" href="/luchtreiniger/">Luchtreiniger H13 HEPA</a><a class="btn ghost" href="/scholen/">Ceilingflow voor scholen</a></p>
+</div></section>
+
+{offerte('Offerte voor uw kantoor of praktijk')}
+{faq_block(KANTOOR_FAQ)}
+</main>
+''' + footer() + '</body>\n</html>\n'
+    return h + body
+
+
 WINTER_FAQ = [
     ("Heeft een plafondventilator zin in de winter?", "Ja. Warme lucht stijgt op en blijft onder het plafond hangen, terwijl het bij de vloer en de bureaus kouder aanvoelt. Ceilingflow zet die lucht in beweging, zodat de warmte van de verwarming beter verdeeld wordt over de ruimte."),
     ("Welke stand gebruik je in de winter?", "Gebruik een lage snelheid. Dan mengt de warme lucht onder het plafond met de rest van de ruimte zonder dat je een koele luchtstroom voelt. Snelheid en richting stel je in met de meegeleverde afstandsbediening."),
@@ -736,7 +811,7 @@ def winter():
     <div class="rv d1"><b>2</b><p>Ceilingflow erin</p><span>Stekker in een stopcontact boven het plafond.</span></div>
     <div class="rv d2"><b>3</b><p>Lage stand aan</p><span>Met de afstandsbediening, ook richting en timer.</span></div>
   </div>
-  <p class="rv" style="margin-top:28px;display:flex;gap:12px;flex-wrap:wrap"><a class="btn ghost" href="/scholen/">Ceilingflow voor scholen</a><a class="btn ghost" href="/kinderopvang/">Ceilingflow voor kinderopvang</a></p>
+  <p class="rv" style="margin-top:28px;display:flex;gap:12px;flex-wrap:wrap"><a class="btn ghost" href="/kantoor/">Ceilingflow voor kantoren</a><a class="btn ghost" href="/scholen/">Ceilingflow voor scholen</a><a class="btn ghost" href="/kinderopvang/">Ceilingflow voor kinderopvang</a></p>
 </div></section>
 
 {offerte('Meerdere ruimtes voor deze winter?')}
@@ -848,6 +923,8 @@ def main():
     (ROOT / 'scholen/index.html').write_text(scholen())
     (ROOT / 'kinderopvang').mkdir(exist_ok=True)
     (ROOT / 'kinderopvang/index.html').write_text(kinderopvang())
+    (ROOT / 'kantoor').mkdir(exist_ok=True)
+    (ROOT / 'kantoor/index.html').write_text(kantoor())
     (ROOT / 'winter').mkdir(exist_ok=True)
     (ROOT / 'winter/index.html').write_text(winter())
     (ROOT / 'luchtreiniger').mkdir(exist_ok=True)
@@ -861,6 +938,7 @@ def main():
   <url><loc>{URL}/ventilator/</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
   <url><loc>{URL}/scholen/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>{URL}/kinderopvang/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>{URL}/kantoor/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>{URL}/winter/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>{URL}/luchtreiniger/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
 </urlset>

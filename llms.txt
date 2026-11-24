@@ -22,7 +22,8 @@
 - Scholen: prijs per lokaal en offerte voor meerdere lokalen, https://ceilingflow.nl/scholen/
 - Kinderopvang: stil tijdens het slaapuurtje, buiten bereik van kinderen, prijs per groepsruimte, https://ceilingflow.nl/kinderopvang/
 - Stookseizoen: https://ceilingflow.nl/winter/
-- Kantoren en zorg: https://ceilingflow.nl/
+- Kantoren, vergaderruimtes en praktijkruimtes: 35 dB(A) tijdens vergaderen, ongeveer 0,33 kWh per werkdag, prijs per ruimte, https://ceilingflow.nl/kantoor/
+- Zorg: https://ceilingflow.nl/
 
 ## Bestellen
 
@@ -36,5 +37,6 @@
 - [Plafondventilator voor klaslokalen · Ceilingflow voor scholen](https://ceilingflow.nl/scholen/): Stille plafondventilator voor het 60x60 systeemplafond in klaslokalen en kinderopvang. Onder 35 dB, niets op de vloer, installatie in 5 minuten. €299 excl. btw, offerte voor meerdere lokalen.
 - [Plafondventilator voor de kinderopvang · Ceilingflow](https://ceilingflow.nl/kinderopvang/): Stille plafondventilator voor de groepsruimte van kinderopvang en peuteropvang. Onder 35 dB voor het slaapuurtje, buiten bereik van kinderen, niets op de vloer. €299 excl. btw per groepsruimte.
 - [Plafondventilator in de winter · warme lucht terug naar beneden · Ceilingflow](https://ceilingflow.nl/winter/): Warme lucht blijft onder het plafond hangen. Een plafondventilator op lage stand brengt die terug naar beneden. Ceilingflow past in het 60x60 systeemplafond, onder 35 dB, €299 excl. btw.
+- [Plafondventilator voor kantoor en spreekkamer · Ceilingflow](https://ceilingflow.nl/kantoor/): Stille plafondventilator voor het 60x60 systeemplafond in kantoren, vergaderruimtes en praktijkruimtes. €299 excl. btw per ruimte.
 
 Sitemap met alle pagina's: https://ceilingflow.nl/sitemap.xml
