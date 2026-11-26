@@ -479,6 +479,7 @@ def pdp():
     <p class="tot" id="tot"></p>
     <button class="alt" type="button" data-offerte-knop>Zakelijke offerte voor meerdere lokalen</button>
     <p style="margin-top:10px;font-size:.9rem;opacity:.85">Liever via bol.com bestellen? Ceilingflow Wit staat ook in onze eigen bol-winkel (Pegasus Depot). <a href="https://www.bol.com/nl/nl/p/pegasus-depot-ceilingflow-plafondventilator-595-x-595-mm-voor-systeemplafonds-plug-and-play-met-afstandsbediening-wit/9300000401948628/" target="_blank" rel="noopener" data-umami-event="bol-alternatief-klik" data-umami-event-plek="ventilator" style="text-decoration:underline">Bekijk op bol.com</a></p>
+     <p style="margin-top:8px;font-size:.9rem;opacity:.85">Meerdere ruimtes? <a href="/kantoor/#per-ruimte" data-umami-event="ventilator-naar-kantoor" style="text-decoration:underline">Kantoren: prijs per ruimte</a> · <a href="/scholen/#per-lokaal" data-umami-event="ventilator-naar-scholen" style="text-decoration:underline">Scholen: prijs per lokaal</a></p>
     <div class="eta"><span class="dot"></span><span>Ceilingflow <span data-kleur-naam>Wit</span> direct te bestellen · leverdatum per mail na bestelling</span></div>
     <div class="usps">
       <div><b>NL €9,50</b>verzending per bestelling</div>
