@@ -409,6 +409,7 @@ PDP_CSS = '''<style>
 
 LAMP_FAQ = [
     ("Kan Ceilingflow naast een LED-paneel hangen?", "Ja. Ceilingflow en LED-panelen hebben allebei het 60×60 formaat en passen in hetzelfde plafondrooster. Je vervangt een gewone plafondplaat door Ceilingflow en de verlichting blijft zoals hij is."),
+    ("Is Ceilingflow een plafondventilator zonder lamp?", "Ja. Ceilingflow heeft geen lamp en geen lichtpunt. De unit zorgt alleen voor luchtcirculatie en ligt op de plek van één plaat in een 60×60 systeemplafond, naast de verlichting die er al hangt. Voor een gewoon plafond zonder rooster is hij niet geschikt."),
     ("Verkopen jullie ook plafondventilatoren met lamp?", "Nee. Wij verkopen Ceilingflow voor het 60×60 systeemplafond en luchtreinigers. Voor een plafondventilator met lamp in de woonkamer of slaapkamer kun je beter bij een verlichtingswinkel terecht."),
 ]
 LAMP_ROWS = [
@@ -440,6 +441,8 @@ def lamp_html():
   <h2 class="h2 rv d1" style="margin-top:20px;font-size:clamp(38px,5vw,72px)">Plafondventilator<br><em>met lamp?</em></h2>
   <p class="lead rv">Ceilingflow heeft geen lamp. De unit vervangt één plaat van 60×60 cm in het systeemplafond, zodat de LED-panelen of armaturen die er al hangen gewoon blijven zitten. Licht en luchtcirculatie blijven zo twee aparte toestellen. Zoek je een ventilator met lamp voor thuis, dan past een klassieke plafondventilator met schoepen en verlichting beter. Die verkopen wij niet.</p>
   <div class="lamp-t rv"><table><thead><tr><th></th><th>Ceilingflow</th><th>Plafondventilator met lamp</th></tr></thead><tbody>{rows}</tbody></table></div>
+  <h3 class="rv" id="zonder-lamp" style="margin-top:48px;font-size:clamp(24px,2.6vw,36px);letter-spacing:-.03em">Plafondventilator zonder lamp voor het systeemplafond</h3>
+  <p class="lead rv">Zoek je juist een plafondventilator zonder lamp, omdat het licht in de ruimte al geregeld is? Dan is Ceilingflow daarvoor gemaakt. Er zit geen lamp, geen lichtpunt en geen schoep onder het plafond: de unit ligt vlak in het rooster op de plek van één plaat van 60×60 cm. Hij werkt op 35 tot 47 dB(A), gebruikt 27 tot 41 W en je bedient hem met de afstandsbediening. Goed om te weten: hij past alleen in een systeemplafond. Voor een gewoon plafond thuis is een klassieke plafondventilator zonder lamp de juiste keuze en die verkopen wij niet.</p>
 </div></section>'''
 
 
